@@ -44,20 +44,18 @@ export function Header() {
             viewBox="0 0 64 64"
             width="44"
             height="44"
-            className="h-9 w-9 sm:h-11 sm:w-11 shrink-0 transition-transform duration-300 group-hover:rotate-[-3deg]"
+            className="h-9 w-9 sm:h-11 sm:w-11 shrink-0 transition-transform duration-300 group-hover:scale-[1.03]"
             aria-hidden="true"
             focusable="false"
           >
-            {/* Sunrise: purpose and a point of focus */}
-            <path d="M13 34.5a19 19 0 0 1 38 0" fill="none" stroke="#D64B37" strokeWidth="2.8" strokeLinecap="round" />
-            <path d="M19 35a13 13 0 0 1 26 0" fill="none" stroke="#171B1B" strokeWidth="2" strokeLinecap="round" />
-            <circle cx="32" cy="22.5" r="7.5" fill="#D64B37" />
-            {/* Open book: ideas translated into practice */}
-            <path d="M8.5 38.5c8.7-3 16.5-.9 23.5 5.2 7-6.1 14.8-8.2 23.5-5.2v13.1c-8.7-2.2-16.5-.4-23.5 5.5-7-5.9-14.8-7.7-23.5-5.5z" fill="#FFFEFA" stroke="#171B1B" strokeWidth="1.8" strokeLinejoin="round" />
-            <path d="M32 43.7v13.4" fill="none" stroke="#171B1B" strokeWidth="1.6" />
-            <path d="M10.2 41.2c7.8-2.1 14.7-.4 20.3 4.2v9.1c-6.3-4.7-13.1-6.2-20.3-4.7z" fill="#DCE5D8" />
-            <path d="M53.8 41.2c-7.8-2.1-14.7-.4-20.3 4.2v9.1c6.3-4.7 13.1-6.2 20.3-4.7z" fill="#F6F3EC" />
-            <path d="M8.5 38.5c8.7-3 16.5-.9 23.5 5.2 7-6.1 14.8-8.2 23.5-5.2" fill="none" stroke="#171B1B" strokeWidth="1.8" strokeLinejoin="round" />
+            {/* W/P monogram framed by a quiet antique-bronze orbit */}
+            <g fill="none" stroke="#9B7658" strokeLinecap="round">
+              <path d="M13.5 45.5A23 23 0 1 1 49 17.2" strokeWidth="1.35" />
+              <path d="M8.7 35.5A27 27 0 0 1 42.8 5.9" strokeWidth=".75" opacity=".7" />
+            </g>
+            <text x="7" y="43" fontFamily="Georgia, 'Times New Roman', serif" fontSize="31" fill="#191919" letterSpacing="-2.7">W</text>
+            <text x="30" y="49" fontFamily="Georgia, 'Times New Roman', serif" fontSize="33" fill="#9B7658" letterSpacing="-2">P</text>
+            <path d="M50 7.5 52.5 14l6.5 2.5-6.5 2.5-2.5 6.5-2.5-6.5L41 16.5l6.5-2.5z" fill="#9B7658" />
           </svg>
           <span className="flex flex-col justify-center">
             <span className="font-serif-display text-lg sm:text-2xl font-bold tracking-tight text-[#171B1B] transition-colors group-hover:text-[#D64B37]">
