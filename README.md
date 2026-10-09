@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://ospc-task-xi.vercel.app/">
-    <img src="public/why-practiced-banner.jpg" alt="WHY, PRACTICED — the exact supplied signature artwork with WP monogram, wordmark, and Reflect, Learn, Grow tagline" width="100%" />
+    <img src="https://raw.githubusercontent.com/ishanraychaudhuri2025/OSPC_task/main/public/why-practiced-banner.svg" alt="WHY, PRACTICED — 4K vector signature artwork with WP monogram, wordmark, Reflect, Learn, Grow tagline, and Simon Sinek signature" width="100%" />
   </a>
 
   <p><strong>A better question can change the way you lead.</strong></p>
@@ -85,7 +85,7 @@ The interface is built around a quiet, editorial visual system rather than a gen
 | Signal | `#D64B37` | Accent, active state and key highlights |
 | Sage | `#DCE5D8` | Secondary visual emphasis and success states |
 
-The layout emphasizes deliberate whitespace, readable line lengths, consistent components, restrained motion and keyboard-visible focus states. The identity uses an interlocking WP serif emblem, a fine antique-gold orbit, and a small four-point star. The dramatic monogram creates a memorable silhouette, while the restrained wordmark and warm ivory palette keep the experience calm and welcoming. The full vector lockup is available at [`docs/why-practiced-signature.svg`](docs/why-practiced-signature.svg), the standalone symbol at [`public/why-practiced-symbol.svg`](public/why-practiced-symbol.svg), and the compact browser icon at [`public/favicon.svg`](public/favicon.svg).
+The layout emphasizes deliberate whitespace, readable line lengths, consistent components, restrained motion and keyboard-visible focus states. The identity uses an interlocking WP serif emblem, a fine antique-gold orbit, and a small four-point star. The dramatic monogram creates a memorable silhouette, while the restrained wordmark and warm ivory palette keep the experience calm and welcoming. The full vector lockup is available at [`docs/why-practiced-signature.svg`](docs/why-practiced-signature.svg), the standalone monogram at [`public/why-practiced-symbol.svg`](public/why-practiced-symbol.svg), and the compact browser icon at [`public/favicon.svg`](public/favicon.svg).
 
 ## How it works
 
