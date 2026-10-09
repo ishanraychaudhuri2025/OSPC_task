@@ -48,14 +48,14 @@ export function Header() {
             aria-hidden="true"
             focusable="false"
           >
-            {/* W/P monogram framed by a quiet antique-bronze orbit */}
             <g fill="none" stroke="#9B7658" strokeLinecap="round">
-              <path d="M13.5 45.5A23 23 0 1 1 49 17.2" strokeWidth="1.35" />
-              <path d="M8.7 35.5A27 27 0 0 1 42.8 5.9" strokeWidth=".75" opacity=".7" />
+              <path d="M13.5 47A23 23 0 1 1 49 17.5" strokeWidth="1.35" />
+              <path d="M8.7 36A27 27 0 0 1 42.8 6.2" strokeWidth=".75" opacity=".7" />
             </g>
-            <text x="7" y="43" fontFamily="Georgia, 'Times New Roman', serif" fontSize="31" fill="#191919" letterSpacing="-2.7">W</text>
-            <text x="30" y="49" fontFamily="Georgia, 'Times New Roman', serif" fontSize="33" fill="#9B7658" letterSpacing="-2">P</text>
-            <path d="M50 7.5 52.5 14l6.5 2.5-6.5 2.5-2.5 6.5-2.5-6.5L41 16.5l6.5-2.5z" fill="#9B7658" />
+            <path d="M4.5 17.5H10L16.1 39.8L21.9 17.5H27.1L32.6 39.8L39.2 17.5H45L35.9 50H30.8L24.5 30.6L18.6 50H13.5Z" fill="#191919" />
+            <path d="M30.8 48.8V20.2H39.3C47.1 20.2 51.1 23.8 51.1 30.1C51.1 36.1 46.7 39.6 39.5 39.6H37.5V48.8Z" fill="#9B7658" />
+            <path d="M37.5 25V34.9H39.1C42.8 34.9 44.6 33.2 44.6 30C44.6 26.8 42.8 25 39.1 25Z" fill="#F6F3EC" />
+            <path d="M50 7.5L52.5 14L59 16.5L52.5 19L50 25.5L47.5 19L41 16.5L47.5 14Z" fill="#9B7658" />
           </svg>
           <span className="flex flex-col justify-center">
             <span className="font-serif-display text-lg sm:text-2xl font-bold tracking-tight text-[#171B1B] transition-colors group-hover:text-[#D64B37]">
