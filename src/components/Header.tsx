@@ -44,22 +44,18 @@ export function Header() {
             viewBox="0 0 64 64"
             width="44"
             height="44"
-            className="h-9 w-9 sm:h-11 sm:w-11 shrink-0 transition-transform duration-300 group-hover:scale-[1.03]"
+            className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 transition-transform duration-300 group-hover:scale-[1.02]"
             aria-hidden="true"
             focusable="false"
           >
-            <g fill="none" stroke="#9B7658" strokeLinecap="round">
-              <path d="M13.5 47A23 23 0 1 1 48 17.5" strokeWidth="1.2" />
-              <path d="M8.7 36A27 27 0 0 1 42 6.2" strokeWidth=".7" opacity=".65" />
-            </g>
-            <path d="M4.5 18.5L11.5 43.5L19 18.5L26.5 43.5L34 18.5" fill="none" stroke="#191919" strokeWidth="3.5" strokeLinecap="square" strokeLinejoin="miter" />
-            <path d="M37.5 48.5V18.5H44.3C51 18.5 54.8 21.8 54.8 27.5C54.8 33.2 51 36.5 44.3 36.5H42.5V48.5Z" fill="#9B7658" />
-            <path d="M42.5 23V32.2H44C47.5 32.2 49.2 30.6 49.2 27.6C49.2 24.6 47.5 23 44 23Z" fill="#F6F3EC" />
-            <path d="M50 7.5L52.5 14L59 16.5L52.5 19L50 25.5L47.5 19L41 16.5L47.5 14Z" fill="#9B7658" />
+            <path d="M18 53A26 26 0 1 1 48 10" fill="none" stroke="#9B7658" strokeWidth="1.2" strokeLinecap="round" />
+            <path d="M4.5 19L10.7 43L17.2 19L23.8 43L30.3 19" fill="none" stroke="#191919" strokeWidth="3.1" strokeLinecap="square" strokeLinejoin="miter" />
+            <path d="M36 48V19H43.1C50.1 19 54.5 22.8 54.5 29C54.5 35.1 50.1 39 43.1 39H40.7V48Z" fill="#9B7658" />
+            <path d="M40.7 23.5V34.5H43C47.1 34.5 49.2 32.7 49.2 29C49.2 25.4 47.1 23.5 43 23.5Z" fill="#F6F3EC" />
           </svg>
           <span className="flex flex-col justify-center">
-            <span className="font-serif-display text-lg sm:text-2xl font-bold tracking-tight text-[#171B1B] transition-colors group-hover:text-[#D64B37]">
-              WHY<span className="text-[#D64B37]">,</span> PRACTICED
+            <span className="font-serif-display text-lg sm:text-[1.35rem] font-normal tracking-[0.015em] text-[#171B1B] transition-colors group-hover:text-[#9B7658]">
+              WHY<span className="text-[#9B7658]">,</span> PRACTICED
             </span>
             <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#666D68]">
               An Editorial Study
