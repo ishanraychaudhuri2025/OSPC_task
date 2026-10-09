@@ -1,6 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Helper to validate subscriber opt-in payload
     function isValidSubscriber(data) {
       return data.keys().hasAll(['email', 'consent', 'consentTextVersion', 'source', 'createdAt'])
         && data.keys().hasOnly(['email', 'firstName', 'interest', 'consent', 'consentTextVersion', 'source', 'createdAt', 'updatedAt'])
@@ -12,17 +13,35 @@ service cloud.firestore {
         && (!('interest' in data) || data.interest in ['Purpose', 'Leadership', 'Trust & Teams', 'Infinite Mindset']);
     }
 
+    // Helper to check user authentication and ownership
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // Newsletter Subscribers: Public clients cannot list or query records
     match /newsletterSubscribers/{subscriberId} {
-      // Public listing and querying of subscribers is strictly prohibited
       allow list: if false;
-      // Single doc lookup restricted to valid 64-char SHA-256 hex hash
       allow get: if subscriberId is string && subscriberId.size() == 64;
-      // Creation allowed only with strict schema validation and SHA-256 id
       allow create: if subscriberId is string && subscriberId.size() == 64 && isValidSubscriber(request.resource.data);
-      // Updates and deletions are forbidden from untrusted clients
       allow update, delete: if false;
     }
 
+    // User Profile: Accessible exclusively by the authenticated user
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      // User's Golden Circle saved canvases: Owner isolated
+      match /canvases/{canvasId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // User's podcast bookmarks: Owner isolated
+      match /bookmarks/{bookmarkId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Global default-deny catch-all
     match /{document=**} {
       allow read, write: if false;
     }

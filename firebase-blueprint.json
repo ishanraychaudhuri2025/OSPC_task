@@ -46,12 +46,117 @@
         }
       },
       "required": ["email", "consent", "consentTextVersion", "source"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated user profile in WHY, PRACTICED",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "User identifier matching auth.uid"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name",
+          "maxLength": 100
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Account registration timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Account update timestamp"
+        }
+      },
+      "required": ["uid", "email", "createdAt"]
+    },
+    "PurposeCanvas": {
+      "title": "PurposeCanvas",
+      "description": "User-saved Golden Circle purpose canvas",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Canvas document ID"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "UID of document owner"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title or initiative name for the canvas",
+          "maxLength": 120
+        },
+        "why": {
+          "type": "string",
+          "description": "Why core purpose and motivating cause",
+          "maxLength": 1500
+        },
+        "how": {
+          "type": "string",
+          "description": "How guiding values and principles",
+          "maxLength": 1500
+        },
+        "what": {
+          "type": "string",
+          "description": "What tangible outcomes and offerings",
+          "maxLength": 1500
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last modified timestamp"
+        }
+      },
+      "required": ["id", "ownerId", "title", "why", "how", "what", "createdAt", "updatedAt"]
+    },
+    "PodcastBookmark": {
+      "title": "PodcastBookmark",
+      "description": "User bookmark for an official A Bit of Optimism episode",
+      "type": "object",
+      "properties": {
+        "episodeId": {
+          "type": "string",
+          "description": "Unique episode identifier"
+        },
+        "title": {
+          "type": "string",
+          "description": "Episode title"
+        },
+        "bookmarkedAt": {
+          "type": "string",
+          "description": "Timestamp when bookmarked"
+        }
+      },
+      "required": ["episodeId", "title", "bookmarkedAt"]
     }
   },
   "firestore": {
     "/newsletterSubscribers/{subscriberId}": {
       "schema": "Subscriber",
       "description": "Collection storing opt-in records keyed by sha256 of normalized email"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document accessible only by the authenticated owner"
+    },
+    "/users/{userId}/canvases/{canvasId}": {
+      "schema": "PurposeCanvas",
+      "description": "Saved Golden Circle purpose canvases owned by the authenticated user"
+    },
+    "/users/{userId}/bookmarks/{bookmarkId}": {
+      "schema": "PodcastBookmark",
+      "description": "Saved podcast episode bookmarks owned by the authenticated user"
     }
   }
 }

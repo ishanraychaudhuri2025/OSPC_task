@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '../router/Router';
-import { ExternalLink, ArrowUpRight, Compass, BookOpen, Users, Shield } from 'lucide-react';
+import { ExternalLink, ArrowUpRight, Headphones, Compass, Shield } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -36,9 +36,9 @@ export function Footer() {
           {/* Site Navigation */}
           <div className="lg:col-span-3 space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-[#FFFEFA]">
-              Pages
+              Navigation
             </h3>
-            <ul className="space-y-3 text-sm text-[#D8D8CF]">
+            <ul className="space-y-2.5 text-sm text-[#D8D8CF]">
               <li>
                 <Link to="/" className="transition-colors hover:text-[#D64B37]">
                   Editorial Home
@@ -46,12 +46,27 @@ export function Footer() {
               </li>
               <li>
                 <Link to="/ideas" className="transition-colors hover:text-[#D64B37]">
-                  Curated Ideas Library
+                  Ideas Library
+                </Link>
+              </li>
+              <li>
+                <Link to="/practice" className="transition-colors hover:text-[#D64B37]">
+                  Purpose Canvas (Studio)
+                </Link>
+              </li>
+              <li>
+                <Link to="/podcast" className="transition-colors hover:text-[#D64B37]">
+                  A Bit of Optimism Podcast
                 </Link>
               </li>
               <li>
                 <Link to="/community" className="transition-colors hover:text-[#D64B37]">
                   Notes on WHY Opt-In
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard" className="transition-colors hover:text-[#D64B37]">
+                  Study Dashboard
                 </Link>
               </li>
             </ul>
@@ -82,6 +97,17 @@ export function Footer() {
                   className="inline-flex items-center gap-1.5 transition-colors hover:text-[#D64B37]"
                 >
                   <span>Simon's Stated Purpose (Our WHY)</span>
+                  <ExternalLink className="h-3.5 w-3.5 opacity-70" aria-hidden="true" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://simonsinek.com/podcast/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 transition-colors hover:text-[#D64B37]"
+                >
+                  <span>A Bit of Optimism Official Portal</span>
                   <ExternalLink className="h-3.5 w-3.5 opacity-70" aria-hidden="true" />
                 </a>
               </li>

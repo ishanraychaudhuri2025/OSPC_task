@@ -1,6 +1,13 @@
 import React, { createContext, useContext, useEffect, useState, useTransition } from 'react';
 
-type RoutePath = '/' | '/ideas' | '/community';
+export type RoutePath =
+  | '/'
+  | '/ideas'
+  | '/practice'
+  | '/podcast'
+  | '/dashboard'
+  | '/auth'
+  | '/community';
 
 interface RouterContextValue {
   currentPath: RoutePath;
@@ -19,12 +26,18 @@ export function useRouter() {
 function normalizePath(rawPath: string): RoutePath {
   const cleaned = rawPath.replace(/\/+$/, '') || '/';
   if (cleaned === '/ideas') return '/ideas';
+  if (cleaned === '/practice') return '/practice';
+  if (cleaned === '/podcast') return '/podcast';
+  if (cleaned === '/dashboard') return '/dashboard';
+  if (cleaned === '/auth') return '/auth';
   if (cleaned === '/community') return '/community';
   return '/';
 }
 
 export function RouterProvider({ children }: { children: React.ReactNode }) {
-  const [currentPath, setCurrentPath] = useState<RoutePath>(() => normalizePath(window.location.pathname));
+  const [currentPath, setCurrentPath] = useState<RoutePath>(() =>
+    normalizePath(typeof window !== 'undefined' ? window.location.pathname : '/')
+  );
   const [, startTransition] = useTransition();
 
   useEffect(() => {

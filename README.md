@@ -1,4 +1,4 @@
-# WHY, PRACTICED
+# WHY, PRACTICED — Deployment & Production Guide
 
 An independent, non-commercial editorial learning experience inspired by publicly available ideas associated with Simon Sinek: purpose, the Golden Circle, leadership, trust, and the infinite mindset.
 
@@ -7,77 +7,87 @@ An independent, non-commercial editorial learning experience inspired by publicl
 
 ---
 
-## Features & Routes
+## 1. Production Architecture & Vercel Compatibility
 
-1. **Editorial Homepage (`/`)**
-   - High-craft typographic hierarchy inspired by publication design benchmarks.
-   - Purpose statement, core premise quote, and three learning lenses: *Purpose*, *People & Trust*, and *Infinite Horizon*.
-   - Featured topic previews linking to the curated catalog and community opt-in.
-
-2. **Ideas Library (`/ideas`)**
-   - 8 curated principles across **Purpose**, **Leadership**, **Trust & Teams**, and **Infinite Mindset**.
-   - Interactive category filter with keyboard-accessible segmented buttons and an "All" reset.
-   - Real-time search query filtering over titles, summaries, and reflection practices.
-   - Clean unboxed metadata with typographic separators following zero-pill design discipline.
-   - Outbound verified links to official primary sources:
-     - [Simon Sinek Official Website](https://simonsinek.com/)
-     - [Simon's Stated Purpose (Our WHY)](https://simonsinek.com/our-why/)
-     - [Official Books Catalogue](https://simonsinek.com/books)
-     - [Start with Why Reference](https://simonsinek.com/books/start-with-why)
-
-3. **Notes on WHY Community (`/community`)**
-   - Independent opt-in form with server-side schema validation and Firestore persistence.
-   - Collects required email, optional first name, optional topic focus, and explicit consent.
-   - Honeypot anti-spam protection (`website` hidden input).
-   - Deterministic SHA-256 document IDs and atomic transaction deduplication.
-   - Distinct, accessible states: Submitting, Success (201), Already Subscribed (200), Validation Error (400), and Server Error (500).
+| Component | AI Studio / Cloud Run Runtime | Vercel Deployment Runtime |
+|---|---|---|
+| **Frontend** | React 19 SPA compiled via Vite to `dist/` | Static Vite SPA deployed to Vercel CDN Edge |
+| **Routing** | Handled via Express wildcard fallback to `dist/index.html` | Handled via `vercel.json` rewrite (`/(.*) -> /index.html`) |
+| **API Endpoint** | `POST /api/newsletter` served by Express in `server.ts` | `POST /api/newsletter` executed as a Vercel Serverless Function (`api/newsletter.ts`) |
+| **Authentication** | Client-side Firebase Auth SDK with `browserLocalPersistence` | Client-side Firebase Auth SDK with `browserLocalPersistence` |
+| **Database** | Cloud Firestore instance `ai-studio-9a10e882-4e4e-4882-bc66-23bde83789c9` | Cloud Firestore instance `ai-studio-9a10e882-4e4e-4882-bc66-23bde83789c9` |
 
 ---
 
-## Technical Architecture
+## 2. Environment Variables Configuration
 
-- **Frontend:** React 19, TypeScript, Tailwind CSS v4, Lucide icons.
-- **Server:** Express.js running on Node.js.
-- **Database:** Firebase Cloud Firestore (`newsletterSubscribers` collection) provisioned through Google AI Studio platform tools.
-- **Security:**
-  - Server-mediated writes; public client listing/querying forbidden (`allow list: if false`).
-  - No secrets, credentials, or PII exposed to client bundles or public logs.
-  - Rate limiting & input boundary sanitization (16kb JSON limit, 80-char name limit, 255-char email limit, RFC 5322 regex).
+| Variable Name | Exposure Level | Description | Where to Configure |
+|---|---|---|---|
+| `APP_URL` | Public / Hosting | Canonical URL of the deployed application | Vercel Project Settings > Environment Variables |
+| `VITE_FIREBASE_API_KEY` | Public (Client) | Firebase Web API Key | Vercel Environment Variables (All Environments) |
+| `VITE_FIREBASE_AUTH_DOMAIN` | Public (Client) | Firebase Auth Domain (e.g. `*.firebaseapp.com`) | Vercel Environment Variables (All Environments) |
+| `VITE_FIREBASE_PROJECT_ID` | Public (Client) | GCP Project ID (`gen-lang-client-0825093002`) | Vercel Environment Variables (All Environments) |
+| `VITE_FIREBASE_STORAGE_BUCKET` | Public (Client) | Cloud Storage Bucket URL | Vercel Environment Variables (All Environments) |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID` | Public (Client) | FCM Sender ID | Vercel Environment Variables (All Environments) |
+| `VITE_FIREBASE_APP_ID` | Public (Client) | Firebase Web App ID | Vercel Environment Variables (All Environments) |
+| `VITE_FIREBASE_DATABASE_ID` | Public (Client) | Named Firestore Database ID (`ai-studio-9a10e882-4e4e-4882-bc66-23bde83789c9`) | Vercel Environment Variables (All Environments) |
+| `FIREBASE_SERVICE_ACCOUNT_KEY` | **Private (Server-Only)** | Service Account JSON string for Admin SDK | Vercel Environment Variables (Serverless Functions only) |
+| `FIREBASE_PROJECT_ID` | **Private (Server-Only)** | Fallback Project ID for serverless function | Vercel Environment Variables (Serverless Functions only) |
+| `FIREBASE_DATABASE_ID` | **Private (Server-Only)** | Fallback Database ID for serverless function | Vercel Environment Variables (Serverless Functions only) |
+
+> **Critical Security Warning:**  
+> Never commit real secret keys, private keys, or service-account JSON files to Git. The `.gitignore` file is configured to exclude all `.env*` files (except `.env.example`), `*serviceAccount*.json`, and private keys.
 
 ---
 
-## Local Development & Running
+## 3. Step-by-Step Vercel Deployment Checklist
 
-### 1. Install Dependencies
+### Step 1: Connect GitHub Repository
+1. Push your repository to GitHub.
+2. In the [Vercel Dashboard](https://vercel.com), select **Add New Project** and import the repository.
+3. Keep the default build settings:
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+   - **Install Command:** `npm install`
+
+### Step 2: Configure Environment Variables in Vercel
+In the project setup or **Project Settings > Environment Variables**, add the variables specified in `.env.example`:
+- Set all `VITE_FIREBASE_*` variables for the frontend.
+- Provide `FIREBASE_SERVICE_ACCOUNT_KEY` (or `FIREBASE_CLIENT_EMAIL` + `FIREBASE_PRIVATE_KEY`) for serverless database operations.
+- Ensure `VITE_FIREBASE_DATABASE_ID` and `FIREBASE_DATABASE_ID` are both set to `ai-studio-9a10e882-4e4e-4882-bc66-23bde83789c9`.
+
+### Step 3: Authorize Domain in Firebase Console
+Once Vercel assigns your domain (e.g., `why-practiced.vercel.app`):
+1. Navigate to **Firebase Console > Authentication > Settings > Authorized domains**.
+2. Click **Add domain** and enter your Vercel deployment hostname (`your-app.vercel.app`).
+3. *(Required for Google Sign-In and email action redirect links to function without `auth/unauthorized-domain` errors).*
+
+### Step 4: Verify Post-Deployment Flows
+- [ ] Direct refresh on `/`, `/ideas`, `/practice`, `/podcast`, `/dashboard`, `/auth`, `/community`.
+- [ ] Sign in with Google / Email and verify session persists after browser reload.
+- [ ] Save, edit, and delete a Golden Circle purpose canvas in the Practice Lab.
+- [ ] Bookmark a podcast episode and confirm it appears in the Dashboard.
+- [ ] Test newsletter opt-in: submit invalid email (400), submit valid email (201), and submit duplicate email (200).
+
+---
+
+## 4. Local Development & Testing Commands
+
 ```bash
+# 1. Install dependencies
 npm install
-```
 
-### 2. Run the Development Server
-```bash
+# 2. Start local server with Express + Vite middleware
 npm run dev
-```
-The server will start on `http://localhost:3000` with Express and Vite middleware.
+# Server accessible on http://localhost:3000
 
-### 3. Run Typecheck / Linting
-```bash
+# 3. Typecheck codebase
 npm run lint
-```
 
-### 4. Build for Production
-```bash
+# 4. Compile production bundle
 npm run build
-```
 
-### 5. Start Production Server
-```bash
+# 5. Start production Node server
 npm run start
 ```
-
----
-
-## Verification & QA
-
-- Tested routes directly on direct refresh: `/`, `/ideas`, `/community`.
-- Tested form submissions with valid email, duplicate email, invalid email format, and missing consent.
-- Firestore security rules deployed and active (`firestore.rules`).
