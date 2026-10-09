@@ -67,7 +67,7 @@ This is an independent student project. It is not Simon Sinek's official website
 - **Bookmarks:** save podcast episodes and retrieve them from the dashboard.
 - **Real form submission:** the community form sends a `POST /api/newsletter` request; it is not just a client-side success message.
 - **Validation and duplicate handling:** the newsletter endpoint normalizes and validates the email, requires consent, checks optional fields, includes a honeypot and uses a deterministic document ID for duplicate handling.
-- **Responsive editorial UI:** warm paper tones, restrained terracotta accent, serif display typography, clear type hierarchy, a custom concentric-ring Golden Circle illustration, and a bespoke sunrise-and-open-book brand mark used in the site header and favicon.
+- **Responsive editorial UI:** warm paper tones, restrained terracotta accent, serif display typography, clear type hierarchy, a custom concentric-ring Golden Circle illustration, and a bespoke W/P monogram with antique-bronze detailing used in the site header and favicon.
 - **Independent-project disclosure:** the footer makes the project's non-affiliation clear.
 
 > **Newsletter MVP scope:** the form records an opt-in in the database. It does not send automated emails unless a separate email delivery service is added and configured.
@@ -85,7 +85,7 @@ The interface is built around a quiet, editorial visual system rather than a gen
 | Signal | `#D64B37` | Accent, active state and key highlights |
 | Sage | `#DCE5D8` | Secondary visual emphasis and success states |
 
-The layout emphasizes deliberate whitespace, readable line lengths, consistent components, restrained motion and keyboard-visible focus states.
+The layout emphasizes deliberate whitespace, readable line lengths, consistent components, restrained motion and keyboard-visible focus states. The updated identity pairs a custom W/P monogram with antique-bronze arcs, a small star detail, and a refined serif wordmark. The full vector lockup is available at [`docs/why-practiced-signature.svg`](docs/why-practiced-signature.svg), with the favicon monogram at [`public/why-practiced-monogram.svg`](public/why-practiced-monogram.svg).
 
 ## How it works
 
@@ -247,9 +247,10 @@ Every environment-variable change requires a new Vercel deployment to affect the
 ├── api/
 │   └── newsletter.ts          # Newsletter serverless endpoint
 ├── public/
-│   └── why-practiced-mark.svg # Brand mark used in header and favicon
+│   └── why-practiced-monogram.svg # Luxury-inspired monogram and favicon
 ├── docs/
-│   └── why-practiced-cover.svg
+│   ├── why-practiced-cover.svg
+│   └── why-practiced-signature.svg # Full brand lockup
 ├── src/
 │   ├── components/            # Header, footer and Golden Circle illustration
 │   ├── context/               # Shared Firebase auth state
