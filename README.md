@@ -67,7 +67,7 @@ This is an independent student project. It is not Simon Sinek's official website
 - **Bookmarks:** save podcast episodes and retrieve them from the dashboard.
 - **Real form submission:** the community form sends a `POST /api/newsletter` request; it is not just a client-side success message.
 - **Validation and duplicate handling:** the newsletter endpoint normalizes and validates the email, requires consent, checks optional fields, includes a honeypot and uses a deterministic document ID for duplicate handling.
-- **Responsive editorial UI:** warm paper tones, restrained terracotta accent, serif display typography, clear type hierarchy and a custom concentric-ring Golden Circle illustration.
+- **Responsive editorial UI:** warm paper tones, restrained terracotta accent, serif display typography, clear type hierarchy, a custom concentric-ring Golden Circle illustration, and a bespoke sunrise-and-open-book brand mark used in the site header and favicon.
 - **Independent-project disclosure:** the footer makes the project's non-affiliation clear.
 
 > **Newsletter MVP scope:** the form records an opt-in in the database. It does not send automated emails unless a separate email delivery service is added and configured.
@@ -246,6 +246,8 @@ Every environment-variable change requires a new Vercel deployment to affect the
 .
 ├── api/
 │   └── newsletter.ts          # Newsletter serverless endpoint
+├── public/
+│   └── why-practiced-mark.svg # Brand mark used in header and favicon
 ├── docs/
 │   └── why-practiced-cover.svg
 ├── src/
