@@ -15,10 +15,10 @@ export function HomePage() {
         className="w-full overflow-hidden border-b border-[#D8D8CF] bg-[#F6F3EC]"
       >
         <img
-          src="/why-practiced-banner.jpg"
-          alt="WHY, PRACTICED — the original supplied logo artwork with the WP monogram and Reflect, Learn, Grow tagline."
-          width="1672"
-          height="941"
+          src="/why-practiced-banner.svg"
+          alt="WHY, PRACTICED — the original WP monogram, wordmark, Reflect, Learn, Grow tagline, and Simon Sinek signature."
+          width="3840"
+          height="2160"
           fetchPriority="high"
           decoding="async"
           className="block h-auto w-full"
