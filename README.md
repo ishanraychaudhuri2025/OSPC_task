@@ -7,11 +7,10 @@
   <p>An independent, interactive learning experience about purpose, trust and putting ideas into practice.</p>
 
   <p>
-    <a href="https://ospc-task-xi.vercel.app/"><strong>Visit the live site ↗</strong></a>
+    <a href="https://ospc-task-xi.vercel.app/"><strong>Visit the live site </strong></a>
     &nbsp;·&nbsp;
     <a href="https://github.com/ishanraychaudhuri2025/OSPC_task">Source code</a>
     &nbsp;·&nbsp;
-    <a href="https://vercel.com/ishan-e93e/ospc-task/Gh8PMYbWUpTgwriV7S2Rnbmku4mg">Vercel project</a>
   </p>
 
   <p>
