@@ -9,6 +9,22 @@ export function HomePage() {
 
   return (
     <div className="flex flex-col">
+      {/* Full-width signature artwork — the same artwork is used in the README. */}
+      <section
+        aria-label="WHY, PRACTICED brand banner"
+        className="w-full overflow-hidden border-b border-[#D8D8CF] bg-[#F6F3EC]"
+      >
+        <img
+          src="/why-practiced-brand-banner.webp"
+          alt="WHY, PRACTICED — Reflect, Learn, Grow. An Independent Editorial Study."
+          width="1672"
+          height="941"
+          fetchPriority="high"
+          decoding="async"
+          className="block h-auto w-full"
+        />
+      </section>
+
       {/* Editorial Hero Section */}
       <section className="relative overflow-hidden border-b border-[#D8D8CF] bg-[#F6F3EC] py-20 sm:py-28 lg:py-36">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
