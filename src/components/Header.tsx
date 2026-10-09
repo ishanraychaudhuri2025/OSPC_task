@@ -34,32 +34,17 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[#D8D8CF] bg-[#F6F3EC]/90 backdrop-blur-md transition-colors">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
-        {/* Brand mark and wordmark */}
+        {/* Typographic brand signature — simple, quiet, and editorial */}
         <Link
           to="/"
-          className="group flex items-center gap-2.5 sm:gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D64B37]"
+          className="group flex min-w-0 flex-col justify-center text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9B7658]"
           aria-label="WHY, PRACTICED — Return to homepage"
         >
-          <svg
-            viewBox="0 0 64 64"
-            width="44"
-            height="44"
-            className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 transition-transform duration-300 group-hover:scale-[1.02]"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path d="M18 53A26 26 0 1 1 48 10" fill="none" stroke="#9B7658" strokeWidth="1.2" strokeLinecap="round" />
-            <path d="M4.5 19L10.7 43L17.2 19L23.8 43L30.3 19" fill="none" stroke="#191919" strokeWidth="3.1" strokeLinecap="square" strokeLinejoin="miter" />
-            <path d="M36 48V19H43.1C50.1 19 54.5 22.8 54.5 29C54.5 35.1 50.1 39 43.1 39H40.7V48Z" fill="#9B7658" />
-            <path d="M40.7 23.5V34.5H43C47.1 34.5 49.2 32.7 49.2 29C49.2 25.4 47.1 23.5 43 23.5Z" fill="#F6F3EC" />
-          </svg>
-          <span className="flex flex-col justify-center">
-            <span className="font-serif-display text-lg sm:text-[1.35rem] font-normal tracking-[0.015em] text-[#171B1B] transition-colors group-hover:text-[#9B7658]">
-              WHY<span className="text-[#9B7658]">,</span> PRACTICED
-            </span>
-            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#666D68]">
-              An Editorial Study
-            </span>
+          <span className="whitespace-nowrap font-serif-display text-xl sm:text-2xl font-normal tracking-[0.015em] text-[#191919] transition-colors group-hover:text-[#6F503B]">
+            WHY<span className="text-[#9B7658]">,</span> PRACTICED
+          </span>
+          <span className="mt-0.5 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#666D68]">
+            An Editorial Study
           </span>
         </Link>
 
