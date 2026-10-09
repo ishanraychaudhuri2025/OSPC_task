@@ -34,17 +34,27 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[#D8D8CF] bg-[#F6F3EC]/90 backdrop-blur-md transition-colors">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
-        {/* Wordmark */}
+        {/* Brand mark and wordmark */}
         <Link
           to="/"
-          className="group flex flex-col justify-center text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D64B37]"
+          className="group flex items-center gap-2.5 sm:gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D64B37]"
           aria-label="WHY, PRACTICED — Return to homepage"
         >
-          <span className="font-serif-display text-xl sm:text-2xl font-bold tracking-tight text-[#171B1B] transition-colors group-hover:text-[#D64B37]">
-            WHY, PRACTICED
-          </span>
-          <span className="text-[10px] uppercase tracking-[0.2em] text-[#666D68]">
-            An Editorial Study
+          <img
+            src="/why-practiced-mark.svg"
+            alt=""
+            aria-hidden="true"
+            width="44"
+            height="44"
+            className="h-9 w-9 sm:h-11 sm:w-11 shrink-0 transition-transform duration-300 group-hover:rotate-[-3deg]"
+          />
+          <span className="flex flex-col justify-center">
+            <span className="font-serif-display text-lg sm:text-2xl font-bold tracking-tight text-[#171B1B] transition-colors group-hover:text-[#D64B37]">
+              WHY<span className="text-[#D64B37]">,</span> PRACTICED
+            </span>
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#666D68]">
+              An Editorial Study
+            </span>
           </span>
         </Link>
 
