@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://ospc-task-xi.vercel.app/">
-    <img src="docs/why-practiced-cover.svg" alt="WHY, PRACTICED — an independent editorial study of purpose, leadership and practice" width="100%" />
+    <img src="public/why-practiced-brand-banner.webp" alt="WHY, PRACTICED — the signature brand artwork: Reflect, Learn, Grow" width="100%" />
   </a>
 
   <p><strong>A better question can change the way you lead.</strong></p>
