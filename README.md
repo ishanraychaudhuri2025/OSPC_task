@@ -8,7 +8,7 @@
 
   <p>
     <a href="https://ospc-task-xi.vercel.app/"><strong>Visit the live site </strong></a>
-    &nbsp;·&nbsp;
+    &nbsp;&nbsp;
   </p>
 
   <p>
