@@ -4,7 +4,6 @@
   <rect width="1400" height="340" fill="#F6F3EC"/>
   <g transform="translate(56 48) scale(2.7)">
     <path d="M17 66A31 31 0 1 1 59 13" fill="none" stroke="#9B7658" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M8 51A37 37 0 0 1 43 4" fill="none" stroke="#B9A28C" stroke-width=".75" stroke-linecap="round" opacity=".8"/>
     <text x="2" y="57" font-family="Georgia, 'Times New Roman', serif" font-size="57" fill="#171717" letter-spacing="-5">W</text>
     <text x="32" y="62" font-family="Georgia, 'Times New Roman', serif" font-size="52" fill="#9B7658" letter-spacing="-4">P</text>
     <path d="M62 5L65 13L73 16L65 19L62 27L59 19L51 16L59 13Z" fill="#9B7658"/>
@@ -17,5 +16,5 @@
   <text x="590" y="231" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="9" fill="#55504A">LEARN</text>
   <circle cx="730" cy="226" r="2.4" fill="#9B7658"/>
   <text x="758" y="231" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="9" fill="#55504A">GROW</text>
-  <text x="392" y="274" font-family="Arial, Helvetica, sans-serif" font-size="11" letter-spacing="3.6" fill="#827A72">AN INDEPENDENT EDITORIAL STUDY</text>
+  <text x="392" y="274" font-family="Arial, Helvetica, sans-serif" font-size="11" letter-spacing="3.6" fill="#827A72">SIMON SINEK</text>
 </svg>
