@@ -6,25 +6,19 @@ import {
   GoogleAuthProvider,
 } from 'firebase/auth';
 import { getFirestore, Firestore } from 'firebase/firestore';
+import appletConfig from '../../firebase-applet-config.json';
 
-// Firebase web API keys are project identifiers, not authorization credentials.
-// Keep the key in runtime/build environment configuration instead of source code.
-const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
-
-if (!apiKey) {
-  throw new Error(
-    '[Firebase Config] Missing VITE_FIREBASE_API_KEY. Configure the Firebase web app key in the AI Studio environment or Vercel project settings.'
-  );
-}
-
+// Use environment variables if provided (e.g., on Vercel),
+// otherwise use the native platform-provided configuration from firebase-applet-config.json.
+// No credentials or API keys are hard-coded in source code.
 const firebaseConfig = {
-  apiKey,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'gen-lang-client-0825093002.firebaseapp.com',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'gen-lang-client-0825093002',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'gen-lang-client-0825093002.firebasestorage.app',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '459857114130',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:459857114130:web:c5bc7d01512a85dcd014cb',
-  firestoreDatabaseId: import.meta.env.VITE_FIREBASE_DATABASE_ID || 'ai-studio-9a10e882-4e4e-4882-bc66-23bde83789c9',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || appletConfig.apiKey,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || appletConfig.authDomain,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || appletConfig.projectId,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || appletConfig.storageBucket,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || appletConfig.messagingSenderId,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || appletConfig.appId,
+  firestoreDatabaseId: import.meta.env.VITE_FIREBASE_DATABASE_ID || appletConfig.firestoreDatabaseId,
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -41,7 +35,7 @@ if (typeof window !== 'undefined') {
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-// Explicitly connect to the named Firestore database instance
+// Explicitly connect to the intended Firestore database instance
 export const db: Firestore = getFirestore(app, firebaseConfig.firestoreDatabaseId);
 
 export default app;

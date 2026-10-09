@@ -52,10 +52,10 @@ An independent, non-commercial editorial learning experience inspired by publicl
    - **Install Command:** `npm install`
 
 ### Step 2: Configure Environment Variables in Vercel
-In the project setup or **Project Settings > Environment Variables**, add the variables specified in `.env.example`:
-- Set all `VITE_FIREBASE_*` variables for the frontend.
-- Provide `FIREBASE_SERVICE_ACCOUNT_KEY` (or `FIREBASE_CLIENT_EMAIL` + `FIREBASE_PRIVATE_KEY`) for serverless database operations.
-- Ensure `VITE_FIREBASE_DATABASE_ID` and `FIREBASE_DATABASE_ID` are both set to `ai-studio-9a10e882-4e4e-4882-bc66-23bde83789c9`.
+In Vercel project setup or **Project Settings > Environment Variables**, add the variables documented in `vercel.env.example`:
+- Set all `VITE_FIREBASE_*` variables for the frontend client.
+- Provide `FIREBASE_SERVICE_ACCOUNT_KEY` (or `FIREBASE_CLIENT_EMAIL` + `FIREBASE_PRIVATE_KEY`) for serverless Admin SDK database operations.
+- Ensure `VITE_FIREBASE_DATABASE_ID` and `FIREBASE_DATABASE_ID` are both set to your named Firestore database instance (`ai-studio-9a10e882-4e4e-4882-bc66-23bde83789c9`).
 
 ### Step 3: Authorize Domain in Firebase Console
 Once Vercel assigns your domain (e.g., `why-practiced.vercel.app`):
