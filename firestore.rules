@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isValidSubscriber(data) {
+      return data.keys().hasAll(['email', 'consent', 'consentTextVersion', 'source', 'createdAt'])
+        && data.keys().hasOnly(['email', 'firstName', 'interest', 'consent', 'consentTextVersion', 'source', 'createdAt', 'updatedAt'])
+        && data.email is string && data.email.size() <= 255
+        && data.consent == true
+        && data.consentTextVersion is string && data.consentTextVersion.size() <= 20
+        && data.source is string && data.source.size() <= 100
+        && (!('firstName' in data) || (data.firstName is string && data.firstName.size() <= 80))
+        && (!('interest' in data) || data.interest in ['Purpose', 'Leadership', 'Trust & Teams', 'Infinite Mindset']);
+    }
+
+    match /newsletterSubscribers/{subscriberId} {
+      // Public listing and querying of subscribers is strictly prohibited
+      allow list: if false;
+      // Single doc lookup restricted to valid 64-char SHA-256 hex hash
+      allow get: if subscriberId is string && subscriberId.size() == 64;
+      // Creation allowed only with strict schema validation and SHA-256 id
+      allow create: if subscriberId is string && subscriberId.size() == 64 && isValidSubscriber(request.resource.data);
+      // Updates and deletions are forbidden from untrusted clients
+      allow update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

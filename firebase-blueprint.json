@@ -1,0 +1,57 @@
+{
+  "entities": {
+    "Subscriber": {
+      "title": "Subscriber",
+      "description": "Newsletter interest subscription for WHY, PRACTICED",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Normalized subscriber email address",
+          "maxLength": 255
+        },
+        "firstName": {
+          "type": "string",
+          "description": "Optional subscriber first name",
+          "maxLength": 80
+        },
+        "interest": {
+          "type": "string",
+          "description": "Selected area of interest",
+          "enum": ["Purpose", "Leadership", "Trust & Teams", "Infinite Mindset"]
+        },
+        "consent": {
+          "type": "boolean",
+          "description": "Explicit consent given by user",
+          "enum": [true]
+        },
+        "consentTextVersion": {
+          "type": "string",
+          "description": "Version identifier for the consent statement shown",
+          "maxLength": 20
+        },
+        "source": {
+          "type": "string",
+          "description": "Source page or component where subscription originated",
+          "maxLength": 100
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Server timestamp when created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Server timestamp when updated"
+        }
+      },
+      "required": ["email", "consent", "consentTextVersion", "source"]
+    }
+  },
+  "firestore": {
+    "/newsletterSubscribers/{subscriberId}": {
+      "schema": "Subscriber",
+      "description": "Collection storing opt-in records keyed by sha256 of normalized email"
+    }
+  }
+}
