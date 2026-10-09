@@ -35,8 +35,8 @@ An independent, non-commercial editorial learning experience inspired by publicl
 | `FIREBASE_PROJECT_ID` | **Private (Server-Only)** | Fallback Project ID for serverless function | Vercel Environment Variables (Serverless Functions only) |
 | `FIREBASE_DATABASE_ID` | **Private (Server-Only)** | Fallback Database ID for serverless function | Vercel Environment Variables (Serverless Functions only) |
 
-> **Critical Security Warning:**  
-> Never commit real secret keys, private keys, or service-account JSON files to Git. The `.gitignore` file is configured to exclude all `.env*` files (except `.env.example`), `*serviceAccount*.json`, and private keys.
+> **Security and configuration:**  
+> Never commit service-account JSON, private keys, or real `.env` files. The generated `firebase-applet-config.json` is intentionally ignored by Git; configure `VITE_FIREBASE_*` values in the hosting environment instead. A Firebase web API key is public client configuration, not an Admin credential: restrict it to Firebase-related APIs only, and never reuse it for the Gemini Developer API. Server-only Admin credentials must never use the `VITE_` prefix.
 
 ---
 
