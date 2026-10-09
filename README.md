@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://ospc-task-xi.vercel.app/">
-    <img src="https://raw.githubusercontent.com/ishanraychaudhuri2025/OSPC_task/main/public/why-practiced-banner.svg" alt="WHY, PRACTICED — 4K vector signature artwork with WP monogram, wordmark, Reflect, Learn, Grow tagline, and Simon Sinek signature" width="80%" />
+    <img src="https://raw.githubusercontent.com/ishanraychaudhuri2025/OSPC_task/main/docs/why-practiced-readme-banner.svg" alt="WHY, PRACTICED — 4K vector signature artwork with WP monogram, wordmark, Reflect, Learn, Grow tagline, and Simon Sinek signature" width="100%" />
   </a>
 
   <p><strong>A better question can change the way you lead.</strong></p>
@@ -252,7 +252,8 @@ Every environment-variable change requires a new Vercel deployment to affect the
 │   └── why-practiced-symbol.svg   # Standalone WP monogram
 ├── docs/
 │   ├── why-practiced-cover.svg
-│   └── why-practiced-signature.svg # Full typographic brand signature
+│   ├── why-practiced-signature.svg # Full brand signature
+│   └── why-practiced-readme-banner.svg # Full-width, tightly cropped README banner
 ├── src/
 │   ├── components/            # Header, footer and Golden Circle illustration
 │   ├── context/               # Shared Firebase auth state
