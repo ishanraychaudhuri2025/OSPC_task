@@ -1,18 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
-  <title id="title">WHY, PRACTICED — a more considered approach to purpose</title>
-  <desc id="desc">An understated luxury editorial banner with charcoal typography, antique bronze details, and a refined W/P monogram.</desc>
+  <title id="title">WHY, PRACTICED — luxury editorial identity</title>
+  <desc id="desc">An understated ivory banner with the custom W/P monogram, charcoal serif wordmark, and antique-bronze detailing.</desc>
   <rect width="1200" height="360" fill="#F6F3EC"/>
   <rect x="24" y="24" width="1152" height="312" fill="none" stroke="#D8CDBF" stroke-width="1"/>
   <path d="M64 73H1136" stroke="#9B7658" stroke-width="1"/>
   <text x="68" y="57" fill="#6D665F" font-family="Arial, Helvetica, sans-serif" font-size="10.5" letter-spacing="4">AN INDEPENDENT EDITORIAL STUDY</text>
-  <g transform="translate(72 111)">
+  <g transform="translate(70 111)">
     <g fill="none" stroke="#9B7658" stroke-linecap="round">
       <path d="M19 116A57 57 0 1 1 107 45" stroke-width="1.7"/>
       <path d="M7 91A68 68 0 0 1 91 14" stroke-width=".9" opacity=".75"/>
     </g>
-    <text x="1" y="93" font-family="Georgia, 'Times New Roman', serif" font-size="66" fill="#191919" letter-spacing="-6">W</text>
-    <text x="47" y="108" font-family="Georgia, 'Times New Roman', serif" font-size="70" fill="#9B7658" letter-spacing="-4">P</text>
-    <path d="M111 0 115.8 12.2 128 17 115.8 21.8 111 34 106.2 21.8 94 17 106.2 12.2z" fill="#9B7658"/>
+    <path d="M1 34H9L21 81L32 34H40L51 81L64 34H73L57 108H49L36 62L24 108H16Z" fill="#191919"/>
+    <path d="M43 108V43H62C79 43 89 51 89 65C89 79 79 87 63 87H58V108Z" fill="#9B7658"/>
+    <path d="M58 53V77H63C72 77 78 73 78 65C78 57 72 53 63 53Z" fill="#F6F3EC"/>
+    <path d="M111 0L115.8 12.2L128 17L115.8 21.8L111 34L106.2 21.8L94 17L106.2 12.2Z" fill="#9B7658"/>
   </g>
   <path d="M256 112V258" stroke="#9B7658" stroke-width="1.1"/>
   <text x="306" y="176" fill="#191919" font-family="Georgia, 'Times New Roman', serif" font-size="65" letter-spacing="2.3">WHY, PRACTICED</text>
