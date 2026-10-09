@@ -7,7 +7,7 @@
   <p>An independent, interactive learning experience about purpose, trust and putting ideas into practice.</p>
 
   <p>
-    <a href="https://ospc-task-xi.vercel.app/"><strong>Visit the site WHY, PRACTICED </strong></a>
+    <a href="https://ospc-task-xi.vercel.app/"><strong>Visit WHY, PRACTICED </strong></a>
     &nbsp;&nbsp;
   </p>
 
