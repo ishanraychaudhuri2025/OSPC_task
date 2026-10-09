@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 260" role="img" aria-labelledby="title desc">
+  <title id="title">WHY, PRACTICED luxury-inspired brand signature</title>
+  <desc id="desc">Original editorial wordmark with a W and P monogram, antique bronze arc, four-point star and the tagline Reflect, Learn, Grow.</desc>
+  <g transform="translate(24 38)">
+    <g fill="none" stroke="#9B7658" stroke-linecap="round">
+      <path d="M28 151A73 73 0 1 1 141 61" stroke-width="2.1"/>
+      <path d="M13 119A88 88 0 0 1 122 19" stroke-width="1.1" opacity=".7"/>
+    </g>
+    <text x="7" y="123" font-family="Georgia, 'Times New Roman', serif" font-size="83" fill="#191919" letter-spacing="-8">W</text>
+    <text x="66" y="144" font-family="Georgia, 'Times New Roman', serif" font-size="88" fill="#9B7658" letter-spacing="-5">P</text>
+    <path d="M143 0 149 15 164 21 149 27 143 42 137 27 122 21 137 15z" fill="#9B7658"/>
+  </g>
+  <path d="M219 55V205" stroke="#9B7658" stroke-width="1.2"/>
+  <text x="274" y="126" font-family="Georgia, 'Times New Roman', serif" font-size="66" letter-spacing="2.7" fill="#191919">WHY, PRACTICED</text>
+  <path d="M279 151H1082" stroke="#9B7658" stroke-width="1.1"/>
+  <text x="280" y="189" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="8.5" fill="#4F4A45">REFLECT</text>
+  <circle cx="459" cy="184" r="2.3" fill="#9B7658"/>
+  <text x="483" y="189" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="8.5" fill="#4F4A45">LEARN</text>
+  <circle cx="625" cy="184" r="2.3" fill="#9B7658"/>
+  <text x="649" y="189" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="8.5" fill="#4F4A45">GROW</text>
+  <text x="280" y="222" font-family="Arial, Helvetica, sans-serif" font-size="10.5" letter-spacing="3.2" fill="#77716A">AN INDEPENDENT EDITORIAL STUDY</text>
+</svg>
