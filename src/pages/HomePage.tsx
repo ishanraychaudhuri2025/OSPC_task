@@ -12,7 +12,7 @@ export function HomePage() {
       {/* Full-width signature artwork — the same artwork is used in the README. */}
       <section
         aria-label="WHY, PRACTICED brand banner"
-        className="w-full overflow-hidden border-b border-[#D8D8CF] bg-[#F6F3EC]"
+        className="w-full border-b border-[#D8D8CF] bg-[#F6F3EC] px-4 py-3 sm:px-8 sm:py-5"
       >
         <img
           src="/why-practiced-banner.svg"
@@ -21,7 +21,7 @@ export function HomePage() {
           height="2160"
           fetchPriority="high"
           decoding="async"
-          className="block h-auto w-full"
+          className="mx-auto block h-auto w-full max-w-5xl"
         />
       </section>
 
