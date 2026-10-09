@@ -34,28 +34,28 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[#D8D8CF] bg-[#F6F3EC]/90 backdrop-blur-md transition-colors">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
-        {/* Brand signature: a quiet arch, a rising point, and open pages */}
+        {/* Distinctive WP signature mark and editorial wordmark */}
         <Link
           to="/"
           className="group flex min-w-0 items-center gap-2.5 sm:gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9B7658]"
           aria-label="WHY, PRACTICED — Return to homepage"
         >
           <svg
-            viewBox="0 0 64 64"
-            width="42"
-            height="42"
-            className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 transition-transform duration-300 group-hover:scale-[1.02]"
+            viewBox="0 0 80 80"
+            width="46"
+            height="46"
+            className="h-10 w-10 sm:h-11 sm:w-11 shrink-0 transition-transform duration-300 group-hover:scale-[1.025]"
             aria-hidden="true"
             focusable="false"
           >
-            <path d="M15 43V29A17 17 0 0 1 49 29V43" fill="none" stroke="#9B7658" strokeWidth="1.6" strokeLinecap="round" />
-            <circle cx="32" cy="25.5" r="4.6" fill="#9B7658" />
-            <path d="M32 46.5C25.4 40.6 17.2 39.6 8.5 41.8V50.2C17.1 48.1 25.2 49.8 32 56C38.8 49.8 46.9 48.1 55.5 50.2V41.8C46.8 39.6 38.6 40.6 32 46.5Z" fill="#FFFEFA" stroke="#171B1B" strokeWidth="1.5" strokeLinejoin="round" />
-            <path d="M32 46.5V55.5" fill="none" stroke="#171B1B" strokeWidth="1.35" strokeLinecap="round" />
-            <path d="M11 44.4C18.5 42.9 25.4 44.8 31 49.1M53 44.4C45.5 42.9 38.6 44.8 33 49.1" fill="none" stroke="#B9A28C" strokeWidth="1" strokeLinecap="round" />
+            <path d="M17 66A31 31 0 1 1 59 13" fill="none" stroke="#9B7658" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M8 51A37 37 0 0 1 43 4" fill="none" stroke="#B9A28C" strokeWidth=".75" strokeLinecap="round" opacity=".8" />
+            <text x="2" y="57" fontFamily="Georgia, 'Times New Roman', serif" fontSize="57" fill="#171717" letterSpacing="-5">W</text>
+            <text x="32" y="62" fontFamily="Georgia, 'Times New Roman', serif" fontSize="52" fill="#9B7658" letterSpacing="-4">P</text>
+            <path d="M62 5L65 13L73 16L65 19L62 27L59 19L51 16L59 13Z" fill="#9B7658" />
           </svg>
           <span className="flex min-w-0 flex-col justify-center">
-            <span className="whitespace-nowrap font-serif-display text-lg sm:text-xl font-normal tracking-[0.015em] text-[#171B1B] transition-colors group-hover:text-[#6F503B]">
+            <span className="whitespace-nowrap font-serif-display text-lg sm:text-xl font-normal tracking-[0.025em] text-[#171717] transition-colors group-hover:text-[#6F503B]">
               WHY<span className="text-[#9B7658]">,</span> PRACTICED
             </span>
             <span className="mt-0.5 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#666D68]">
