@@ -1,8 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
   <title id="title">WHY, PRACTICED</title>
-  <rect width="64" height="64" rx="5" fill="#F6F3EC"/>
-  <path d="M15 42V29A17 17 0 0 1 49 29V42" fill="none" stroke="#9B7658" stroke-width="2.6" stroke-linecap="round"/>
-  <circle cx="32" cy="25" r="5" fill="#9B7658"/>
-  <path d="M32 46C25 40 17 40 8.5 42V50C17 48 25 50 32 56C39 50 47 48 55.5 50V42C47 40 39 40 32 46Z" fill="#FFFEFA" stroke="#171B1B" stroke-width="2" stroke-linejoin="round"/>
-  <path d="M32 46V55" fill="none" stroke="#171B1B" stroke-width="1.7" stroke-linecap="round"/>
+  <desc id="desc">A bold W/P monogram in ivory and antique gold on charcoal.</desc>
+  <rect width="64" height="64" rx="4" fill="#171717"/>
+  <text x="1" y="46" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#F6F3EC" letter-spacing="-4">W</text>
+  <text x="25" y="50" font-family="Georgia, 'Times New Roman', serif" font-size="41" fill="#B99570" letter-spacing="-4">P</text>
 </svg>
