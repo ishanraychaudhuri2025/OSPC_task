@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">WHY, PRACTICED favicon</title>
-  <rect x="2" y="2" width="60" height="60" rx="2" fill="#191919"/>
-  <text x="27" y="43" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="39" fill="#F6F3EC">W</text>
-  <path d="M43 43c4-3 7-7 6-12 4 3 4 7 2 11-2 4-6 6-10 6z" fill="#B08A67"/>
+  <title id="title">WHY, PRACTICED</title>
+  <rect width="64" height="64" rx="5" fill="#F6F3EC"/>
+  <path d="M15 42V29A17 17 0 0 1 49 29V42" fill="none" stroke="#9B7658" stroke-width="2.6" stroke-linecap="round"/>
+  <circle cx="32" cy="25" r="5" fill="#9B7658"/>
+  <path d="M32 46C25 40 17 40 8.5 42V50C17 48 25 50 32 56C39 50 47 48 55.5 50V42C47 40 39 40 32 46Z" fill="#FFFEFA" stroke="#171B1B" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M32 46V55" fill="none" stroke="#171B1B" stroke-width="1.7" stroke-linecap="round"/>
 </svg>
