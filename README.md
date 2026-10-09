@@ -85,7 +85,7 @@ The interface is built around a quiet, editorial visual system rather than a gen
 | Signal | `#D64B37` | Accent, active state and key highlights |
 | Sage | `#DCE5D8` | Secondary visual emphasis and success states |
 
-The layout emphasizes deliberate whitespace, readable line lengths, consistent components, restrained motion and keyboard-visible focus states. The updated identity pairs a custom W/P monogram with antique-bronze arcs, a small star detail, and a refined serif wordmark. The full vector lockup is available at [`docs/why-practiced-signature.svg`](docs/why-practiced-signature.svg), with the favicon monogram at [`public/why-practiced-monogram.svg`](public/why-practiced-monogram.svg).
+The layout emphasizes deliberate whitespace, readable line lengths, consistent components, restrained motion and keyboard-visible focus states. The updated identity is typographic rather than emblem-led: a high-contrast serif wordmark, bronze comma accent, delicate rule, and generous spacing. The full vector lockup is available at [`docs/why-practiced-signature.svg`](docs/why-practiced-signature.svg), with a compact browser favicon at [`public/favicon.svg`](public/favicon.svg).
 
 ## How it works
 
@@ -247,10 +247,10 @@ Every environment-variable change requires a new Vercel deployment to affect the
 ├── api/
 │   └── newsletter.ts          # Newsletter serverless endpoint
 ├── public/
-│   └── why-practiced-monogram.svg # Luxury-inspired monogram and favicon
+│   └── favicon.svg               # Minimal typographic browser mark
 ├── docs/
 │   ├── why-practiced-cover.svg
-│   └── why-practiced-signature.svg # Full brand lockup
+│   └── why-practiced-signature.svg # Full typographic brand signature
 ├── src/
 │   ├── components/            # Header, footer and Golden Circle illustration
 │   ├── context/               # Shared Firebase auth state
