@@ -1,24 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 260" role="img" aria-labelledby="title desc">
-  <title id="title">WHY, PRACTICED — brand signature</title>
-  <desc id="desc">An understated editorial wordmark with a clearly defined W/P monogram, antique-bronze orbit, and Reflect, Learn, Grow tagline.</desc>
+  <title id="title">WHY, PRACTICED — refined brand signature</title>
+  <desc id="desc">A refined serif wordmark paired with a distinct W/P monogram, fine antique-bronze orbital line, and the phrase Reflect, Learn, Grow.</desc>
   <rect width="1160" height="260" fill="#F6F3EC"/>
-  <g transform="translate(24 38)">
-    <g fill="none" stroke="#9B7658" stroke-linecap="round">
-      <path d="M28 151A73 73 0 1 1 141 61" stroke-width="2.1"/>
-      <path d="M13 119A88 88 0 0 1 122 19" stroke-width="1.1" opacity=".7"/>
-    </g>
-    <path d="M3 54L18 108L34 54L50 108L66 54" fill="none" stroke="#191919" stroke-width="7.5" stroke-linejoin="miter" stroke-linecap="butt"/>
-    <path d="M73 144V54H96C116 54 127 64 127 81C127 98 116 108 96 108H88V144Z" fill="#9B7658"/>
-    <path d="M88 67V95H96C106 95 112 90 112 81C112 72 106 67 96 67Z" fill="#F6F3EC"/>
-    <path d="M143 0L149 15L164 21L149 27L143 42L137 27L122 21L137 15Z" fill="#9B7658"/>
+  <g transform="translate(26 35)">
+    <path d="M24 157A72 72 0 1 1 111 52" fill="none" stroke="#9B7658" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M2 57L16 109L30 57L44 109L58 57" fill="none" stroke="#191919" stroke-width="6.5" stroke-linecap="square" stroke-linejoin="miter"/>
+    <path d="M72 144V57H92.5C113 57 125 68 125 85C125 102 113 113 92.5 113H86V144Z" fill="#9B7658"/>
+    <path d="M86 69V100H92C103.5 100 110 95 110 85C110 75 103.5 69 92 69Z" fill="#F6F3EC"/>
   </g>
-  <path d="M219 55V205" stroke="#9B7658" stroke-width="1.2"/>
-  <text x="274" y="126" font-family="Georgia, 'Times New Roman', serif" font-size="66" letter-spacing="2.7" fill="#191919">WHY, PRACTICED</text>
-  <path d="M279 151H1082" stroke="#9B7658" stroke-width="1.1"/>
-  <text x="280" y="189" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="8.5" fill="#4F4A45">REFLECT</text>
-  <circle cx="459" cy="184" r="2.3" fill="#9B7658"/>
-  <text x="483" y="189" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="8.5" fill="#4F4A45">LEARN</text>
-  <circle cx="625" cy="184" r="2.3" fill="#9B7658"/>
-  <text x="649" y="189" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="8.5" fill="#4F4A45">GROW</text>
-  <text x="280" y="222" font-family="Arial, Helvetica, sans-serif" font-size="10.5" letter-spacing="3.2" fill="#77716A">AN INDEPENDENT EDITORIAL STUDY</text>
+  <path d="M201 55V205" stroke="#9B7658" stroke-width="1"/>
+  <text x="254" y="124" font-family="Georgia, 'Times New Roman', serif" font-size="63" letter-spacing="2.3" fill="#191919">WHY, PRACTICED</text>
+  <path d="M258 150H1080" stroke="#9B7658" stroke-width="1"/>
+  <text x="260" y="188" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="8" fill="#514B45">REFLECT</text>
+  <circle cx="430" cy="183" r="2.1" fill="#9B7658"/>
+  <text x="454" y="188" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="8" fill="#514B45">LEARN</text>
+  <circle cx="585" cy="183" r="2.1" fill="#9B7658"/>
+  <text x="609" y="188" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="8" fill="#514B45">GROW</text>
+  <text x="260" y="222" font-family="Arial, Helvetica, sans-serif" font-size="10" letter-spacing="3" fill="#77716A">AN INDEPENDENT EDITORIAL STUDY</text>
 </svg>
