@@ -85,7 +85,7 @@ The interface is built around a quiet, editorial visual system rather than a gen
 | Signal | `#D64B37` | Accent, active state and key highlights |
 | Sage | `#DCE5D8` | Secondary visual emphasis and success states |
 
-The layout emphasizes deliberate whitespace, readable line lengths, consistent components, restrained motion and keyboard-visible focus states. The identity uses an interlocking WP serif emblem, a fine antique-gold orbit, and a small four-point star. The dramatic monogram creates a memorable silhouette, while the restrained wordmark and warm ivory palette keep the experience calm and welcoming. The full vector lockup is available at [`docs/why-practiced-signature.svg`](docs/why-practiced-signature.svg), the standalone monogram at [`public/why-practiced-symbol.svg`](public/why-practiced-symbol.svg), and the compact browser icon at [`public/favicon.svg`](public/favicon.svg).
+The layout emphasizes deliberate whitespace, readable line lengths, consistent components, restrained motion and keyboard-visible focus states. The identity uses an interlocking WP serif emblem, a fine antique-gold orbit, and a small four-point star. The dramatic monogram creates a memorable silhouette, while the restrained wordmark and warm ivory palette keep the experience calm and welcoming. The full vector lockup is available at [`docs/why-practiced-signature.svg`](docs/why-practiced-signature.svg). The 3840 × 2160 vector banner is shared by the homepage and this README; the standalone WP monogram is at [`public/why-practiced-symbol.svg`](public/why-practiced-symbol.svg), with the compact browser icon at [`public/favicon.svg`](public/favicon.svg).
 
 ## How it works
 
@@ -247,8 +247,9 @@ Every environment-variable change requires a new Vercel deployment to affect the
 ├── api/
 │   └── newsletter.ts          # Newsletter serverless endpoint
 ├── public/
-│   ├── favicon.svg               # Compact brand favicon
-│   └── why-practiced-symbol.svg   # Standalone arch-and-pages symbol
+│   ├── favicon.svg                # Compact WP monogram favicon
+│   ├── why-practiced-banner.svg   # 4K (3840 × 2160) vector banner used on Home and README
+│   └── why-practiced-symbol.svg   # Standalone WP monogram
 ├── docs/
 │   ├── why-practiced-cover.svg
 │   └── why-practiced-signature.svg # Full typographic brand signature
