@@ -1,14 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 260" role="img" aria-labelledby="title desc">
-  <title id="title">WHY, PRACTICED luxury-inspired brand signature</title>
-  <desc id="desc">Original editorial wordmark with a W and P monogram, antique bronze arc, four-point star and the tagline Reflect, Learn, Grow.</desc>
+  <title id="title">WHY, PRACTICED — brand signature</title>
+  <desc id="desc">An original editorial wordmark with a custom W/P monogram, antique-bronze orbit, and the tagline Reflect, Learn, Grow.</desc>
+  <rect width="1160" height="260" fill="#F6F3EC"/>
   <g transform="translate(24 38)">
     <g fill="none" stroke="#9B7658" stroke-linecap="round">
       <path d="M28 151A73 73 0 1 1 141 61" stroke-width="2.1"/>
       <path d="M13 119A88 88 0 0 1 122 19" stroke-width="1.1" opacity=".7"/>
     </g>
-    <text x="7" y="123" font-family="Georgia, 'Times New Roman', serif" font-size="83" fill="#191919" letter-spacing="-8">W</text>
-    <text x="66" y="144" font-family="Georgia, 'Times New Roman', serif" font-size="88" fill="#9B7658" letter-spacing="-5">P</text>
-    <path d="M143 0 149 15 164 21 149 27 143 42 137 27 122 21 137 15z" fill="#9B7658"/>
+    <!-- Custom W with three deliberate valleys; it must not read as a V. -->
+    <path d="M3 47H14L29 105L44 47H55L69 105L86 47H98L76 143H65L49.5 85L34 143H23Z" fill="#191919"/>
+    <path d="M61 144V56H86C108 56 120 67 120 85C120 103 107 114 86 114H82V144Z" fill="#9B7658"/>
+    <path d="M82 70V100H86C98 100 105 95 105 85C105 75 98 70 86 70Z" fill="#F6F3EC"/>
+    <path d="M143 0L149 15L164 21L149 27L143 42L137 27L122 21L137 15Z" fill="#9B7658"/>
   </g>
   <path d="M219 55V205" stroke="#9B7658" stroke-width="1.2"/>
   <text x="274" y="126" font-family="Georgia, 'Times New Roman', serif" font-size="66" letter-spacing="2.7" fill="#191919">WHY, PRACTICED</text>
