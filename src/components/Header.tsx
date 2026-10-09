@@ -49,12 +49,12 @@ export function Header() {
             focusable="false"
           >
             <g fill="none" stroke="#9B7658" strokeLinecap="round">
-              <path d="M13.5 47A23 23 0 1 1 49 17.5" strokeWidth="1.35" />
-              <path d="M8.7 36A27 27 0 0 1 42.8 6.2" strokeWidth=".75" opacity=".7" />
+              <path d="M13.5 47A23 23 0 1 1 48 17.5" strokeWidth="1.2" />
+              <path d="M8.7 36A27 27 0 0 1 42 6.2" strokeWidth=".7" opacity=".65" />
             </g>
-            <path d="M4.5 17.5H10L16.1 39.8L21.9 17.5H27.1L32.6 39.8L39.2 17.5H45L35.9 50H30.8L24.5 30.6L18.6 50H13.5Z" fill="#191919" />
-            <path d="M30.8 48.8V20.2H39.3C47.1 20.2 51.1 23.8 51.1 30.1C51.1 36.1 46.7 39.6 39.5 39.6H37.5V48.8Z" fill="#9B7658" />
-            <path d="M37.5 25V34.9H39.1C42.8 34.9 44.6 33.2 44.6 30C44.6 26.8 42.8 25 39.1 25Z" fill="#F6F3EC" />
+            <path d="M4.5 18.5L11.5 43.5L19 18.5L26.5 43.5L34 18.5" fill="none" stroke="#191919" strokeWidth="3.5" strokeLinecap="square" strokeLinejoin="miter" />
+            <path d="M37.5 48.5V18.5H44.3C51 18.5 54.8 21.8 54.8 27.5C54.8 33.2 51 36.5 44.3 36.5H42.5V48.5Z" fill="#9B7658" />
+            <path d="M42.5 23V32.2H44C47.5 32.2 49.2 30.6 49.2 27.6C49.2 24.6 47.5 23 44 23Z" fill="#F6F3EC" />
             <path d="M50 7.5L52.5 14L59 16.5L52.5 19L50 25.5L47.5 19L41 16.5L47.5 14Z" fill="#9B7658" />
           </svg>
           <span className="flex flex-col justify-center">
