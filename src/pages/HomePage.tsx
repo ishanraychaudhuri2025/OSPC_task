@@ -17,8 +17,8 @@ export function HomePage() {
         <img
           src="/why-practiced-brand-banner.webp"
           alt="WHY, PRACTICED — Reflect, Learn, Grow. An Independent Editorial Study."
-          width="1672"
-          height="941"
+          width="1400"
+          height="787"
           fetchPriority="high"
           decoding="async"
           className="block h-auto w-full"
