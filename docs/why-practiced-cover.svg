@@ -1,22 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
-  <title id="title">WHY, PRACTICED</title>
-  <desc id="desc">An independent editorial study about purpose, leadership, and putting ideas into practice. Warm ivory background, bold dark typography, a terracotta accent, and concentric rings.</desc>
+  <title id="title">WHY, PRACTICED — a more considered approach to purpose</title>
+  <desc id="desc">An understated luxury editorial banner with charcoal typography, antique bronze details, and a refined W/P monogram.</desc>
   <rect width="1200" height="360" fill="#F6F3EC"/>
-  <path d="M64 54H1136" stroke="#D8D8CF" stroke-width="1"/>
-  <text x="68" y="40" fill="#5E655F" font-family="Arial, Helvetica, sans-serif" font-size="12" letter-spacing="4">AN INDEPENDENT EDITORIAL STUDY</text>
-  <text x="68" y="154" fill="#171B1B" font-family="Georgia, 'Times New Roman', serif" font-size="79" font-weight="700" letter-spacing="-3">WHY,</text>
-  <text x="68" y="235" fill="#171B1B" font-family="Georgia, 'Times New Roman', serif" font-size="79" font-weight="700" letter-spacing="-3">PRACTICED</text>
-  <rect x="70" y="264" width="48" height="5" fill="#D64B37"/>
-  <text x="132" y="273" fill="#5E655F" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="1.2">A better question can change the way you lead.</text>
-  <g transform="translate(915 184)">
-    <circle r="126" fill="none" stroke="#D8D8CF" stroke-width="1.5"/>
-    <circle r="94" fill="#DCE5D8" stroke="#AAB8AA" stroke-width="1.5"/>
-    <circle r="61" fill="#F6F3EC" stroke="#171B1B" stroke-width="1.5"/>
-    <circle r="28" fill="#D64B37"/>
-    <text x="0" y="5" text-anchor="middle" fill="#FFFEFA" font-family="Arial, Helvetica, sans-serif" font-size="10" font-weight="700" letter-spacing="1">WHY</text>
-    <text x="0" y="-73" text-anchor="middle" fill="#171B1B" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1.8">HOW</text>
-    <text x="0" y="-108" text-anchor="middle" fill="#5E655F" font-family="Arial, Helvetica, sans-serif" font-size="10" font-weight="700" letter-spacing="1.8">WHAT</text>
+  <rect x="24" y="24" width="1152" height="312" fill="none" stroke="#D8CDBF" stroke-width="1"/>
+  <path d="M64 73H1136" stroke="#9B7658" stroke-width="1"/>
+  <text x="68" y="57" fill="#6D665F" font-family="Arial, Helvetica, sans-serif" font-size="10.5" letter-spacing="4">AN INDEPENDENT EDITORIAL STUDY</text>
+  <g transform="translate(72 111)">
+    <g fill="none" stroke="#9B7658" stroke-linecap="round">
+      <path d="M19 116A57 57 0 1 1 107 45" stroke-width="1.7"/>
+      <path d="M7 91A68 68 0 0 1 91 14" stroke-width=".9" opacity=".75"/>
+    </g>
+    <text x="1" y="93" font-family="Georgia, 'Times New Roman', serif" font-size="66" fill="#191919" letter-spacing="-6">W</text>
+    <text x="47" y="108" font-family="Georgia, 'Times New Roman', serif" font-size="70" fill="#9B7658" letter-spacing="-4">P</text>
+    <path d="M111 0 115.8 12.2 128 17 115.8 21.8 111 34 106.2 21.8 94 17 106.2 12.2z" fill="#9B7658"/>
   </g>
-  <text x="68" y="326" fill="#5E655F" font-family="Arial, Helvetica, sans-serif" font-size="11" letter-spacing="2.2">PURPOSE  /  TRUST  /  LEADERSHIP  /  PRACTICE</text>
-  <text x="1135" y="326" text-anchor="end" fill="#5E655F" font-family="Arial, Helvetica, sans-serif" font-size="11" letter-spacing="1.5">STUDENT PROJECT · 2026</text>
+  <path d="M256 112V258" stroke="#9B7658" stroke-width="1.1"/>
+  <text x="306" y="176" fill="#191919" font-family="Georgia, 'Times New Roman', serif" font-size="65" letter-spacing="2.3">WHY, PRACTICED</text>
+  <path d="M311 198H1002" stroke="#9B7658" stroke-width="1"/>
+  <text x="312" y="231" fill="#514B45" font-family="Arial, Helvetica, sans-serif" font-size="12.5" letter-spacing="7">REFLECT</text>
+  <circle cx="438" cy="227" r="2" fill="#9B7658"/>
+  <text x="459" y="231" fill="#514B45" font-family="Arial, Helvetica, sans-serif" font-size="12.5" letter-spacing="7">LEARN</text>
+  <circle cx="563" cy="227" r="2" fill="#9B7658"/>
+  <text x="584" y="231" fill="#514B45" font-family="Arial, Helvetica, sans-serif" font-size="12.5" letter-spacing="7">GROW</text>
+  <text x="312" y="270" fill="#77716A" font-family="Arial, Helvetica, sans-serif" font-size="10" letter-spacing="2.5">PURPOSE · TRUST · LEADERSHIP · PRACTICE</text>
+  <path d="M1024 304H1136" stroke="#9B7658" stroke-width="1"/>
+  <circle cx="1007" cy="304" r="2.5" fill="#9B7658"/>
 </svg>
