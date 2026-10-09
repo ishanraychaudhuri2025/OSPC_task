@@ -40,14 +40,25 @@ export function Header() {
           className="group flex items-center gap-2.5 sm:gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D64B37]"
           aria-label="WHY, PRACTICED — Return to homepage"
         >
-          <img
-            src="/why-practiced-mark.svg"
-            alt=""
-            aria-hidden="true"
+          <svg
+            viewBox="0 0 64 64"
             width="44"
             height="44"
             className="h-9 w-9 sm:h-11 sm:w-11 shrink-0 transition-transform duration-300 group-hover:rotate-[-3deg]"
-          />
+            aria-hidden="true"
+            focusable="false"
+          >
+            {/* Sunrise: purpose and a point of focus */}
+            <path d="M13 34.5a19 19 0 0 1 38 0" fill="none" stroke="#D64B37" strokeWidth="2.8" strokeLinecap="round" />
+            <path d="M19 35a13 13 0 0 1 26 0" fill="none" stroke="#171B1B" strokeWidth="2" strokeLinecap="round" />
+            <circle cx="32" cy="22.5" r="7.5" fill="#D64B37" />
+            {/* Open book: ideas translated into practice */}
+            <path d="M8.5 38.5c8.7-3 16.5-.9 23.5 5.2 7-6.1 14.8-8.2 23.5-5.2v13.1c-8.7-2.2-16.5-.4-23.5 5.5-7-5.9-14.8-7.7-23.5-5.5z" fill="#FFFEFA" stroke="#171B1B" strokeWidth="1.8" strokeLinejoin="round" />
+            <path d="M32 43.7v13.4" fill="none" stroke="#171B1B" strokeWidth="1.6" />
+            <path d="M10.2 41.2c7.8-2.1 14.7-.4 20.3 4.2v9.1c-6.3-4.7-13.1-6.2-20.3-4.7z" fill="#DCE5D8" />
+            <path d="M53.8 41.2c-7.8-2.1-14.7-.4-20.3 4.2v9.1c6.3-4.7 13.1-6.2 20.3-4.7z" fill="#F6F3EC" />
+            <path d="M8.5 38.5c8.7-3 16.5-.9 23.5 5.2 7-6.1 14.8-8.2 23.5-5.2" fill="none" stroke="#171B1B" strokeWidth="1.8" strokeLinejoin="round" />
+          </svg>
           <span className="flex flex-col justify-center">
             <span className="font-serif-display text-lg sm:text-2xl font-bold tracking-tight text-[#171B1B] transition-colors group-hover:text-[#D64B37]">
               WHY<span className="text-[#D64B37]">,</span> PRACTICED
