@@ -84,9 +84,14 @@ async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
     if (fs.existsSync(configPath)) {
       rawConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
     } else {
+      const configuredApiKey = process.env.FIREBASE_API_KEY || process.env.VITE_FIREBASE_API_KEY;
+      if (!configuredApiKey) {
+        throw new Error('Missing FIREBASE_API_KEY or VITE_FIREBASE_API_KEY environment configuration.');
+      }
+
       rawConfig = {
         projectId: TARGET_PROJECT_ID,
-        apiKey: process.env.FIREBASE_API_KEY || process.env.VITE_FIREBASE_API_KEY || 'AIzaSyBXAPOLSPDjFDd_jW4-I2OTMCYfoCIzkHs',
+        apiKey: configuredApiKey,
         firestoreDatabaseId: TARGET_DATABASE_ID,
       };
     }
