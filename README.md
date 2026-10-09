@@ -67,7 +67,7 @@ This is an independent student project. It is not Simon Sinek's official website
 - **Bookmarks:** save podcast episodes and retrieve them from the dashboard.
 - **Real form submission:** the community form sends a `POST /api/newsletter` request; it is not just a client-side success message.
 - **Validation and duplicate handling:** the newsletter endpoint normalizes and validates the email, requires consent, checks optional fields, includes a honeypot and uses a deterministic document ID for duplicate handling.
-- **Responsive editorial UI:** warm paper tones, restrained terracotta accent, serif display typography, clear type hierarchy, a custom concentric-ring Golden Circle illustration, and a restrained typographic wordmark with a muted antique-bronze comma accent, paired with generous spacing and a minimal browser favicon.
+- **Responsive editorial UI:** warm paper tones, restrained terracotta accent, serif display typography, clear type hierarchy, a custom concentric-ring Golden Circle illustration, and a bespoke arch-and-open-pages symbol that represents insight becoming practice, paired with a quiet serif wordmark and warm antique-bronze accents.
 - **Independent-project disclosure:** the footer makes the project's non-affiliation clear.
 
 > **Newsletter MVP scope:** the form records an opt-in in the database. It does not send automated emails unless a separate email delivery service is added and configured.
@@ -85,7 +85,7 @@ The interface is built around a quiet, editorial visual system rather than a gen
 | Signal | `#D64B37` | Accent, active state and key highlights |
 | Sage | `#DCE5D8` | Secondary visual emphasis and success states |
 
-The layout emphasizes deliberate whitespace, readable line lengths, consistent components, restrained motion and keyboard-visible focus states. The identity is typographic rather than emblem-led: a high-contrast serif wordmark, muted bronze comma accent, delicate rule, and generous spacing. The full vector lockup is available at [`docs/why-practiced-signature.svg`](docs/why-practiced-signature.svg), with a compact browser favicon at [`public/favicon.svg`](public/favicon.svg).
+The layout emphasizes deliberate whitespace, readable line lengths, consistent components, restrained motion and keyboard-visible focus states. The identity pairs a calm arch and rising point with open pages: a visual metaphor for finding direction, reflecting, and turning ideas into practice. The full vector lockup is available at [`docs/why-practiced-signature.svg`](docs/why-practiced-signature.svg), the standalone symbol at [`public/why-practiced-symbol.svg`](public/why-practiced-symbol.svg), and the compact browser icon at [`public/favicon.svg`](public/favicon.svg).
 
 ## How it works
 
@@ -247,7 +247,8 @@ Every environment-variable change requires a new Vercel deployment to affect the
 ├── api/
 │   └── newsletter.ts          # Newsletter serverless endpoint
 ├── public/
-│   └── favicon.svg               # Minimal typographic browser mark
+│   ├── favicon.svg               # Compact brand favicon
+│   └── why-practiced-symbol.svg   # Standalone arch-and-pages symbol
 ├── docs/
 │   ├── why-practiced-cover.svg
 │   └── why-practiced-signature.svg # Full typographic brand signature
