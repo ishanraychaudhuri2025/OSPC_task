@@ -6,12 +6,11 @@ import { ArrowRight, Compass, Shield, Users, Sparkles, BookOpen, ExternalLink } 
 
 export function HomePage() {
   // Select 3 featured ideas for the homepage preview
-  const featuredTopics = TOPICS.slice(      <LuxuryHero />
+  const featuredTopics = TOPICS.slice(0, 3);
 
-div>
-          </div>
-        </div>
-      </section>
+  return (
+    <div className="flex flex-col">
+      <LuxuryHero />
 
       {/* The Three Learning Lenses */}
       <section id="learning-lenses" className="scroll-mt-24 border-b border-[#D8D8CF] bg-[#FFFEFA] py-20 sm:py-24">
