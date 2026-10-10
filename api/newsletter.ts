@@ -21,8 +21,13 @@ async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
     Boolean(process.env.FIREBASE_SERVICE_ACCOUNT_KEY) ||
     Boolean(process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY);
 
-  const targetProjectId = process.env.FIREBASE_PROJECT_ID;
-  const targetDatabaseId = process.env.FIREBASE_DATABASE_ID;
+  // Project and database IDs are identifiers, not credentials. Fall back to the same
+  // public Firebase configuration used by the working browser app so a missing duplicate
+  // server-side variable cannot prevent newsletter writes. Admin credentials remain required.
+  const targetProjectId =
+    process.env.FIREBASE_PROJECT_ID || process.env.VITE_FIREBASE_PROJECT_ID;
+  const targetDatabaseId =
+    process.env.FIREBASE_DATABASE_ID || process.env.VITE_FIREBASE_DATABASE_ID;
 
   if (!hasServiceAccount || !targetProjectId || !targetDatabaseId) {
     console.error(
@@ -173,7 +178,9 @@ async function getGoogleCloudAccessToken(serviceAccountJson: string): Promise<st
 
 async function verifyRecaptchaEnterprise(req: Request, token: unknown): Promise<RecaptchaCheck> {
   const projectId = process.env.RECAPTCHA_ENTERPRISE_PROJECT_ID;
-  const siteKey = process.env.RECAPTCHA_ENTERPRISE_SITE_KEY || process.env.VITE_RECAPTCHA_ENTERPRISE_SITE_KEY;
+  // Verify with the exact site key used by the browser to mint the token.
+  // The server-only alias is a fallback for deployments that do not expose the VITE variable at runtime.
+  const siteKey = process.env.VITE_RECAPTCHA_ENTERPRISE_SITE_KEY || process.env.RECAPTCHA_ENTERPRISE_SITE_KEY;
   const serviceAccountJson = process.env.RECAPTCHA_ENTERPRISE_SERVICE_ACCOUNT_KEY;
   const required = process.env.RECAPTCHA_ENTERPRISE_REQUIRED === 'true';
   const explicitlyDisabled = process.env.RECAPTCHA_ENTERPRISE_REQUIRED === 'false';
@@ -210,7 +217,13 @@ async function verifyRecaptchaEnterprise(req: Request, token: unknown): Promise<
         }),
       },
     );
-    if (!assessmentResponse.ok) return { passed: false, unavailable: true };
+    if (!assessmentResponse.ok) {
+      console.error(
+        '[Newsletter API] reCAPTCHA Enterprise assessment returned HTTP %d.',
+        assessmentResponse.status
+      );
+      return { passed: false, unavailable: true };
+    }
 
     const assessment = await assessmentResponse.json() as {
       tokenProperties?: { valid?: boolean; action?: string };
@@ -222,12 +235,22 @@ async function verifyRecaptchaEnterprise(req: Request, token: unknown): Promise<
     const minimumScore = Number.isFinite(parsedThreshold)
       ? Math.max(0, Math.min(1, parsedThreshold))
       : 0.5;
+    const tokenValid = tokenProperties?.valid === true;
+    const actionMatches = tokenProperties?.action === RECAPTCHA_ACTION;
+    const scoreAccepted = typeof score === 'number' && score >= minimumScore;
+
+    if (!tokenValid || !actionMatches || !scoreAccepted) {
+      // Safe diagnostic metadata only; never log the token, email, site key, or credentials.
+      console.warn('[Newsletter API] reCAPTCHA token rejected.', {
+        tokenValid,
+        actionMatches,
+        scorePresent: typeof score === 'number',
+        scoreAccepted,
+      });
+    }
 
     return {
-      passed: tokenProperties?.valid === true
-        && tokenProperties.action === RECAPTCHA_ACTION
-        && typeof score === 'number'
-        && score >= minimumScore,
+      passed: tokenValid && actionMatches && scoreAccepted,
     };
   } catch {
     // Never log tokens, service-account credentials, access tokens, or raw API responses.
