@@ -15,7 +15,7 @@ export function HomePage() {
       {/* The Three Learning Lenses */}
       <section id="learning-lenses" className="scroll-mt-24 border-b border-[#D8D8CF] bg-[#FFFEFA] py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <div className="max-w-2xl space-y-3">
+          <div className="max-w-2xl space-y-3 wp-scroll-reveal">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#D64B37]">
               Framework for Inquiry
             </p>
@@ -29,7 +29,7 @@ export function HomePage() {
 
           <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
             {/* Lens 1: Purpose */}
-            <div className="group border border-[#D8D8CF] bg-[#F6F3EC] p-8 transition-all hover:border-[#171B1B]">
+            <div className="group wp-scroll-reveal border border-[#D8D8CF] bg-[#F6F3EC] p-8 transition-all hover:border-[#171B1B]">
               <div className="flex h-12 w-12 items-center justify-center border border-[#171B1B] bg-[#171B1B] text-[#FFFEFA]">
                 <Compass className="h-5 w-5" aria-hidden="true" />
               </div>
@@ -45,7 +45,7 @@ export function HomePage() {
             </div>
 
             {/* Lens 2: People */}
-            <div className="group border border-[#D8D8CF] bg-[#F6F3EC] p-8 transition-all hover:border-[#171B1B]">
+            <div className="group wp-scroll-reveal border border-[#D8D8CF] bg-[#F6F3EC] p-8 transition-all hover:border-[#171B1B]">
               <div className="flex h-12 w-12 items-center justify-center border border-[#171B1B] bg-[#171B1B] text-[#FFFEFA]">
                 <Shield className="h-5 w-5" aria-hidden="true" />
               </div>
@@ -61,7 +61,7 @@ export function HomePage() {
             </div>
 
             {/* Lens 3: Practice */}
-            <div className="group border border-[#D8D8CF] bg-[#F6F3EC] p-8 transition-all hover:border-[#171B1B]">
+            <div className="group wp-scroll-reveal border border-[#D8D8CF] bg-[#F6F3EC] p-8 transition-all hover:border-[#171B1B]">
               <div className="flex h-12 w-12 items-center justify-center border border-[#171B1B] bg-[#171B1B] text-[#FFFEFA]">
                 <Users className="h-5 w-5" aria-hidden="true" />
               </div>
@@ -82,7 +82,7 @@ export function HomePage() {
       {/* Featured Curated Topics */}
       <section className="border-b border-[#D8D8CF] bg-[#F6F3EC] py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 wp-scroll-reveal">
             <div className="space-y-3 max-w-xl">
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#D64B37]">
                 Curated Selection
@@ -107,7 +107,7 @@ export function HomePage() {
             {featuredTopics.map((topic) => (
               <div
                 key={topic.id}
-                className="flex flex-col justify-between border border-[#D8D8CF] bg-[#FFFEFA] p-8 shadow-sm transition-all hover:border-[#171B1B]"
+                className="wp-scroll-reveal flex flex-col justify-between border border-[#D8D8CF] bg-[#FFFEFA] p-8 shadow-sm transition-all hover:border-[#171B1B]"
               >
                 <div className="space-y-4">
                   {/* Clean unboxed metadata with typographic separator (Zero-pill discipline) */}
@@ -165,7 +165,7 @@ export function HomePage() {
       <section className="bg-[#171B1B] py-20 sm:py-24 text-[#FFFEFA]">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center">
-            <div className="lg:col-span-8 space-y-4">
+            <div className="wp-scroll-reveal lg:col-span-8 space-y-4">
               <span className="text-xs uppercase tracking-[0.25em] text-[#D8D8CF]/70">
                 Independent Practice
               </span>
@@ -176,7 +176,7 @@ export function HomePage() {
                 Receive occasional, thoughtful study notes with real-world leadership prompts and reflection frameworks. Free, independent, and always non-commercial.
               </p>
             </div>
-            <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-4">
+            <div className="wp-scroll-reveal lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-4">
               <Link
                 to="/community"
                 className="inline-flex items-center justify-center gap-2 rounded-none border border-[#FFFEFA] bg-[#FFFEFA] px-6 py-4 text-xs font-semibold uppercase tracking-wider text-[#171B1B] transition-all hover:bg-[#D64B37] hover:border-[#D64B37] hover:text-[#FFFEFA] active:translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D64B37]"
