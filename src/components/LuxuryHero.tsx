@@ -147,8 +147,6 @@ export function LuxuryHero() {
                 <rect x="12" y="12" width="496" height="576" fill="none" stroke="#BBA27E" strokeOpacity=".38" strokeWidth=".7" />
                 <path d="M36 58H484 M36 542H484" stroke="#BBA27E" strokeOpacity=".24" strokeWidth=".7" />
                 <circle cx="260" cy="296" r="205" fill="url(#folio-glow)" />
-                <path className="wp-emblem-line" pathLength="1" d="M83 418C109 322 125 202 207 141C254 106 309 105 352 133C401 165 432 244 438 331" fill="none" stroke="url(#folio-gold)" strokeOpacity=".42" strokeWidth=".8" />
-                <path className="wp-emblem-line wp-emblem-line--two" pathLength="1" d="M75 377C128 442 186 475 260 480C334 475 392 442 445 377" fill="none" stroke="url(#folio-gold)" strokeOpacity=".36" strokeWidth=".8" />
                 <ellipse cx="260" cy="300" rx="152" ry="190" fill="none" stroke="#BBA27E" strokeOpacity=".72" strokeWidth=".85" />
                 <ellipse cx="260" cy="300" rx="139" ry="177" fill="none" stroke="#BBA27E" strokeOpacity=".25" strokeWidth=".7" />
                 <path d="M260 92V128 M260 472V508" stroke="#BBA27E" strokeOpacity=".5" strokeWidth=".8" />
