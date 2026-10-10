@@ -1,18 +1,6 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Helper to validate subscriber opt-in payload
-    function isValidSubscriber(data) {
-      return data.keys().hasAll(['email', 'consent', 'consentTextVersion', 'source', 'createdAt'])
-        && data.keys().hasOnly(['email', 'firstName', 'interest', 'consent', 'consentTextVersion', 'source', 'createdAt', 'updatedAt'])
-        && data.email is string && data.email.size() <= 255
-        && data.consent == true
-        && data.consentTextVersion is string && data.consentTextVersion.size() <= 20
-        && data.source is string && data.source.size() <= 100
-        && (!('firstName' in data) || (data.firstName is string && data.firstName.size() <= 80))
-        && (!('interest' in data) || data.interest in ['Purpose', 'Leadership', 'Trust & Teams', 'Infinite Mindset']);
-    }
-
     // Helper to check user authentication and ownership
     function isOwner(userId) {
       return request.auth != null && request.auth.uid == userId;
