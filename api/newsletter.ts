@@ -17,22 +17,34 @@ async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
 
   // All newsletter writes go through the server-side Admin SDK.
   // Never fall back to public-client Firestore writes from this API route.
-  const hasServiceAccount =
-    Boolean(process.env.FIREBASE_SERVICE_ACCOUNT_KEY) ||
-    Boolean(process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY);
+  const hasServiceAccountKey = Boolean(process.env.FIREBASE_SERVICE_ACCOUNT_KEY?.trim());
+  const hasSplitServiceAccount = Boolean(
+    process.env.FIREBASE_CLIENT_EMAIL?.trim() && process.env.FIREBASE_PRIVATE_KEY?.trim()
+  );
+  const hasServiceAccount = hasServiceAccountKey || hasSplitServiceAccount;
 
-  // Project and database IDs are identifiers, not credentials. Fall back to the same
-  // public Firebase configuration used by the working browser app so a missing duplicate
-  // server-side variable cannot prevent newsletter writes. Admin credentials remain required.
+  // Match src/lib/firebase.ts: prefer explicit server variables, then the existing
+  // Vite-configured IDs, then this app's established Firebase project/database defaults.
+  // These IDs are not secrets; Admin credentials remain mandatory.
   const targetProjectId =
-    process.env.FIREBASE_PROJECT_ID || process.env.VITE_FIREBASE_PROJECT_ID;
+    process.env.FIREBASE_PROJECT_ID ||
+    process.env.VITE_FIREBASE_PROJECT_ID ||
+    'gen-lang-client-0825093002';
   const targetDatabaseId =
-    process.env.FIREBASE_DATABASE_ID || process.env.VITE_FIREBASE_DATABASE_ID;
+    process.env.FIREBASE_DATABASE_ID ||
+    process.env.VITE_FIREBASE_DATABASE_ID ||
+    'ai-studio-9a10e882-4e4e-4882-bc66-23bde83789c9';
 
-  if (!hasServiceAccount || !targetProjectId || !targetDatabaseId) {
-    console.error(
-      '[Newsletter API] Production configuration error: Missing required Firebase Admin credentials. Required in production: FIREBASE_SERVICE_ACCOUNT_KEY (or FIREBASE_CLIENT_EMAIL & FIREBASE_PRIVATE_KEY), FIREBASE_PROJECT_ID, and FIREBASE_DATABASE_ID.'
-    );
+  if (!hasServiceAccount) {
+    // Log only presence flags, never secret values.
+    console.error('[Newsletter API] Firebase Admin configuration is missing a service account.', {
+      hasFirebaseServiceAccountKey: hasServiceAccountKey,
+      hasFirebaseClientEmail: Boolean(process.env.FIREBASE_CLIENT_EMAIL?.trim()),
+      hasFirebasePrivateKey: Boolean(process.env.FIREBASE_PRIVATE_KEY?.trim()),
+      hasRecaptchaServiceAccountKey: Boolean(process.env.RECAPTCHA_ENTERPRISE_SERVICE_ACCOUNT_KEY?.trim()),
+      hasProjectId: Boolean(targetProjectId),
+      hasDatabaseId: Boolean(targetDatabaseId),
+    });
     return null;
   }
 
