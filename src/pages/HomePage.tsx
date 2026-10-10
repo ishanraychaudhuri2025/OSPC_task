@@ -1,104 +1,20 @@
 import React from 'react';
+import { LuxuryHero } from '../components/LuxuryHero';
 import { Link } from '../router/Router';
 import { TOPICS } from '../data/topics';
 import { ArrowRight, Compass, Shield, Users, Sparkles, BookOpen, ExternalLink } from 'lucide-react';
 
 export function HomePage() {
   // Select 3 featured ideas for the homepage preview
-  const featuredTopics = TOPICS.slice(0, 3);
+  const featuredTopics = TOPICS.slice(      <LuxuryHero />
 
-  return (
-    <div className="flex flex-col">
-      {/* Full-width signature artwork — the same artwork is used in the README. */}
-      <section
-        aria-label="WHY, PRACTICED brand banner"
-        className="w-full border-b border-[#D8D8CF] bg-[#F6F3EC] px-4 py-3 sm:px-8 sm:py-5"
-      >
-        <img
-          src="/why-practiced-banner.svg"
-          alt="WHY, PRACTICED — the original WP monogram, wordmark, Reflect, Learn, Grow tagline, and Simon Sinek signature."
-          width="3840"
-          height="2160"
-          fetchPriority="high"
-          decoding="async"
-          className="mx-auto block h-auto w-full max-w-5xl"
-        />
-      </section>
-
-      {/* Editorial Hero Section */}
-      <section className="relative overflow-hidden border-b border-[#D8D8CF] bg-[#F6F3EC] py-20 sm:py-28 lg:py-36">
-        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
-            {/* Left Column: Bold Editorial Typography */}
-            <div className="lg:col-span-8 space-y-8">
-              <div className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.25em] text-[#666D68]">
-                <span>An Independent Study</span>
-                <span aria-hidden="true">/</span>
-                <span>Philosophy & Stewardship</span>
-              </div>
-
-              <h1 className="font-serif-display text-4xl font-normal tracking-tight text-[#171B1B] sm:text-6xl lg:text-7xl leading-[1.08]">
-                A better question can change the way you lead.
-              </h1>
-
-              <p className="max-w-2xl text-lg sm:text-xl font-normal leading-relaxed text-[#666D68]">
-                Explore publicly available ideas about purpose, mutual trust, and the infinite mindset—and translate high-level inspiration into daily, observable practice.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
-                <Link
-                  to="/ideas"
-                  className="inline-flex items-center justify-center gap-2 rounded-none border border-[#171B1B] bg-[#171B1B] px-7 py-4 text-xs font-semibold uppercase tracking-wider text-[#FFFEFA] transition-all hover:bg-[#D64B37] hover:border-[#D64B37] active:translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D64B37]"
-                >
-                  <span>Explore the Ideas Library</span>
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-                <Link
-                  to="/community"
-                  className="inline-flex items-center justify-center gap-2 rounded-none border border-[#171B1B] bg-transparent px-7 py-4 text-xs font-semibold uppercase tracking-wider text-[#171B1B] transition-all hover:bg-[#D8D8CF]/40 active:translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D64B37]"
-                >
-                  <span>Join Notes on WHY</span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Right Column: Editorial Graphic / Statement Block */}
-            <div className="lg:col-span-4">
-              <div className="relative border border-[#D8D8CF] bg-[#FFFEFA] p-8 sm:p-10 shadow-sm">
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between border-b border-[#D8D8CF] pb-4">
-                    <span className="text-xs uppercase tracking-widest text-[#666D68]">
-                      Core Premise
-                    </span>
-                    <span className="font-serif-display text-base font-semibold text-[#D64B37]">
-                      01 / 03
-                    </span>
-                  </div>
-
-                  <blockquote className="font-serif-display text-xl leading-snug text-[#171B1B]">
-                    "People don’t buy what you do; they buy why you do it."
-                  </blockquote>
-
-                  <p className="text-xs leading-relaxed text-[#666D68]">
-                    A reminder that clarity of cause creates resonance. When leaders articulate the belief behind their work, loyalty replaces coercion.
-                  </p>
-
-                  <div className="pt-2 border-t border-[#D8D8CF] flex items-center justify-between text-xs text-[#666D68]">
-                    <span>Reference: Public Talk & Text</span>
-                    <Link to="/ideas" className="font-semibold text-[#171B1B] hover:text-[#D64B37] underline underline-offset-4">
-                      Study the concept
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
+div>
           </div>
         </div>
       </section>
 
       {/* The Three Learning Lenses */}
-      <section className="border-b border-[#D8D8CF] bg-[#FFFEFA] py-20 sm:py-24">
+      <section id="learning-lenses" className="scroll-mt-24 border-b border-[#D8D8CF] bg-[#FFFEFA] py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           <div className="max-w-2xl space-y-3">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#D64B37]">
