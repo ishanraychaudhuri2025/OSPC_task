@@ -145,8 +145,8 @@ export function LuxuryHero() {
               <text x="232" y="337" textAnchor="middle" fontFamily="'Cormorant Garamond', Didot, Georgia, serif" fontSize="158" fontWeight="500" fill="url(#couture-ink)" letterSpacing="-16">W</text>
               <text x="326" y="380" textAnchor="middle" fontFamily="'Cormorant Garamond', Didot, Georgia, serif" fontSize="139" fontWeight="500" fill="url(#couture-bronze)" letterSpacing="-12">P</text>
 
-              <path d="M414 147L418 158L429 162L418 166L414 177L410 166L399 162L410 158Z" fill="#9A7B56" />
-              <circle cx="414" cy="162" r="18" fill="none" stroke="#A48B6C" strokeOpacity="0.32" strokeWidth="0.7" />
+              <path d="M360 163L364 174L375 178L364 182L360 193L356 182L345 178L356 174Z" fill="#9A7B56" />
+              <circle cx="360" cy="178" r="18" fill="none" stroke="#A48B6C" strokeOpacity="0.32" strokeWidth="0.7" />
 
               <text x="260" y="548" textAnchor="middle" fill="#7D6D58" fontSize="9" letterSpacing="4">REFLECT · LEARN · GROW</text>
               <path d="M183 566H337" stroke="#A48B6C" strokeOpacity="0.4" strokeWidth="0.7" />
