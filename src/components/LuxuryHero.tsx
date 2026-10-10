@@ -84,13 +84,7 @@ export function LuxuryHero() {
       <div className="wp-couture-grain" aria-hidden="true" />
       <div className="wp-couture-content relative z-10 mx-auto grid w-full max-w-[1500px] grid-cols-1 items-center gap-10 px-6 py-12 sm:px-10 lg:grid-cols-12 lg:gap-12 lg:px-16 xl:px-24">
         <div className="wp-couture-copy lg:col-span-7">
-          <div className="wp-couture-kicker wp-couture-enter">
-            <span className="wp-couture-monogram-small" aria-hidden="true">W<span>P</span></span>
-            <span className="wp-couture-kicker-rule" aria-hidden="true" />
-            <span>Independent thought · Purpose in practice</span>
-          </div>
-
-          <h1 id="homepage-hero-title" className="wp-couture-title mt-8 wp-couture-enter wp-couture-enter--title">
+          <h1 id="homepage-hero-title" className="wp-couture-title mt-0 wp-couture-enter wp-couture-enter--title">
             The quiet power
             <span className="wp-couture-title-italic">of purpose.</span>
           </h1>
@@ -128,25 +122,34 @@ export function LuxuryHero() {
               <span>STUDY No. 01</span>
             </div>
             <svg viewBox="0 0 520 620" className="wp-couture-emblem block h-auto w-full" role="img" aria-labelledby="couture-emblem-title">
-              <title id="couture-emblem-title">A refined WP monogram framed by a single fine oval</title>
+              <title id="couture-emblem-title">A refined WP monogram inside a fine oval, with a small star mark at its upper right</title>
               <defs>
                 <linearGradient id="couture-ink" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#25231F" />
-                  <stop offset="100%" stopColor="#514538" />
+                  <stop offset="0%" stopColor="#201F1B" />
+                  <stop offset="100%" stopColor="#514638" />
+                </linearGradient>
+                <linearGradient id="couture-bronze" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#B49A78" />
+                  <stop offset="100%" stopColor="#82684A" />
                 </linearGradient>
               </defs>
-              <rect x="23" y="20" width="474" height="580" fill="none" stroke="#82725F" strokeOpacity="0.54" strokeWidth="0.8" />
-              <rect x="35" y="32" width="450" height="556" fill="none" stroke="#82725F" strokeOpacity="0.24" strokeWidth="0.6" />
-              <ellipse cx="260" cy="292" rx="148" ry="194" fill="none" stroke="#9A856C" strokeWidth="1" />
-              <ellipse cx="260" cy="292" rx="132" ry="178" fill="none" stroke="#9A856C" strokeOpacity="0.32" strokeWidth="0.7" />
-              <path d="M260 70V116 M260 468V514" stroke="#9A856C" strokeWidth="0.8" />
-              <path d="M230 92L260 62L290 92" fill="none" stroke="#9A856C" strokeWidth="0.8" />
-              <text x="232" y="321" textAnchor="middle" fontFamily="'Bodoni Moda', Didot, Georgia, serif" fontSize="164" fill="url(#couture-ink)" letterSpacing="-18">W</text>
-              <text x="324" y="365" textAnchor="middle" fontFamily="'Bodoni Moda', Didot, Georgia, serif" fontSize="142" fill="#A38765" letterSpacing="-15">P</text>
-              <path d="M260 166L266 181L281 187L266 193L260 208L254 193L239 187L254 181Z" fill="#A38765" />
-              <text x="260" y="545" textAnchor="middle" fill="#71614D" fontSize="9" letterSpacing="4.2">REFLECT · LEARN · GROW</text>
-              <text x="58" y="305" fill="#8B7A66" fontSize="8" letterSpacing="2.6" transform="rotate(-90 58 305)">AN EXERCISE IN CLARITY</text>
-              <text x="462" y="280" fill="#8B7A66" fontSize="8" letterSpacing="2.2" transform="rotate(90 462 280)">PURPOSE &amp; STEWARDSHIP</text>
+
+              <rect x="30" y="24" width="460" height="572" fill="none" stroke="#8D7A62" strokeOpacity="0.28" strokeWidth="0.7" />
+              <path d="M72 90H164 M356 90H448" stroke="#A48D6E" strokeOpacity="0.42" strokeWidth="0.8" />
+              <text x="260" y="94" textAnchor="middle" fill="#8B7A66" fontSize="8" letterSpacing="3.4">A STUDY IN PURPOSE</text>
+
+              <ellipse cx="260" cy="315" rx="135" ry="177" fill="none" stroke="#A48B6C" strokeWidth="1.05" />
+              <ellipse cx="260" cy="315" rx="122" ry="164" fill="none" stroke="#A48B6C" strokeOpacity="0.3" strokeWidth="0.7" />
+              <path d="M260 126V149 M260 481V504" stroke="#A48B6C" strokeOpacity="0.5" strokeWidth="0.8" />
+
+              <text x="232" y="337" textAnchor="middle" fontFamily="'Cormorant Garamond', Didot, Georgia, serif" fontSize="158" fontWeight="500" fill="url(#couture-ink)" letterSpacing="-16">W</text>
+              <text x="326" y="380" textAnchor="middle" fontFamily="'Cormorant Garamond', Didot, Georgia, serif" fontSize="139" fontWeight="500" fill="url(#couture-bronze)" letterSpacing="-12">P</text>
+
+              <path d="M414 147L418 158L429 162L418 166L414 177L410 166L399 162L410 158Z" fill="#9A7B56" />
+              <circle cx="414" cy="162" r="18" fill="none" stroke="#A48B6C" strokeOpacity="0.32" strokeWidth="0.7" />
+
+              <text x="260" y="548" textAnchor="middle" fill="#7D6D58" fontSize="9" letterSpacing="4">REFLECT · LEARN · GROW</text>
+              <path d="M183 566H337" stroke="#A48B6C" strokeOpacity="0.4" strokeWidth="0.7" />
             </svg>
             <div className="wp-couture-art-bottom">
               <span>A more considered way to lead.</span>
