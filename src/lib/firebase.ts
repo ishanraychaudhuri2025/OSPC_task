@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
 } from 'firebase/auth';
 import { getFirestore, type Firestore } from 'firebase/firestore';
+import { initializeAppCheck, ReCaptchaEnterpriseProvider, type AppCheck } from 'firebase/app-check';
 
 type PlatformFirebaseConfig = FirebaseOptions & { firestoreDatabaseId?: string };
 
@@ -44,6 +45,25 @@ if (!firebaseConfigReady) {
 }
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+
+const appCheckSiteKey = env.VITE_FIREBASE_APP_CHECK_RECAPTCHA_ENTERPRISE_KEY?.trim();
+let initializedAppCheck: AppCheck | null = null;
+
+// App Check is optional until its score-based reCAPTCHA Enterprise key is configured.
+// Register the same key in Firebase Console > Security > App Check before enforcing services.
+if (typeof window !== 'undefined' && appCheckSiteKey) {
+  try {
+    initializedAppCheck = initializeAppCheck(app, {
+      provider: new ReCaptchaEnterpriseProvider(appCheckSiteKey),
+      isTokenAutoRefreshEnabled: true,
+    });
+  } catch {
+    // Avoid crashing the whole site if App Check is not registered/configured yet.
+    console.error('[Firebase App Check] Initialization failed. Check the configured site key and Firebase App Check registration.');
+  }
+}
+
+export const appCheck = initializedAppCheck;
 
 export const auth = getAuth(app);
 
