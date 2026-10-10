@@ -50,49 +50,83 @@
   }
 }
 
-/* Quiet-luxury / couture-inspired homepage */
+/* Couture editorial hero — cinematic light, crafted folio, deliberate motion */
 .wp-couture-hero {
+  --couture-progress: 0;
   --couture-copy-y: 0px;
   --couture-copy-opacity: 1;
+  --couture-copy-blur: 0px;
   --couture-art-y: 0px;
   --couture-art-scale: 1;
   --couture-art-rotate: 0deg;
+  --couture-back-y: 0px;
+  --couture-back-rotate: -3deg;
   --couture-progress-width: 0%;
+  --couture-sheen-x: -140%;
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: clamp(720px, calc(100svh - 80px), 970px);
+  min-height: clamp(740px, calc(100svh - 78px), 1030px);
   overflow: clip;
   color: #1B1A17;
   background:
-    radial-gradient(ellipse at 78% 48%, rgba(190, 174, 151, 0.18), transparent 35%),
-    linear-gradient(115deg, #F5F2EB 0%, #F0ECE3 58%, #EAE3D8 100%);
+    radial-gradient(ellipse at 79% 39%, rgba(172, 146, 108, .21), transparent 27%),
+    radial-gradient(ellipse at 8% 86%, rgba(255,255,255,.65), transparent 40%),
+    linear-gradient(115deg, #F7F4ED 0%, #F0ECE3 54%, #E6DDCF 100%);
   isolation: isolate;
 }
+.wp-couture-atmosphere {
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 80% 50%, rgba(128,99,63,.14) 0%, transparent 45%),
+    linear-gradient(90deg, transparent 0%, rgba(255,255,255,.15) 55%, transparent 100%);
+}
 .wp-couture-grain {
-  position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.25;
+  position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.22;
   background-image:linear-gradient(90deg,rgba(93,73,49,.026) 1px,transparent 1px),
     linear-gradient(rgba(93,73,49,.02) 1px,transparent 1px);
   background-size:7px 7px,9px 9px;
-  mask-image:linear-gradient(110deg,#000,transparent 62%);
+  mask-image:linear-gradient(110deg,#000,transparent 70%);
 }
 .wp-couture-content {
-  flex:1; min-height:620px; padding-top:clamp(56px,7vh,94px);
-  padding-bottom:clamp(34px,4vh,52px);
+  flex:1;
+  min-height:640px;
+  padding-top:clamp(54px, 7vh, 92px);
+  padding-bottom:clamp(36px, 5vh, 58px);
 }
 .wp-couture-copy {
-  z-index:2; transform:translate3d(0,var(--couture-copy-y),0);
-  opacity:var(--couture-copy-opacity); will-change:transform,opacity;
+  z-index:2;
+  transform:translate3d(0,var(--couture-copy-y),0);
+  opacity:var(--couture-copy-opacity);
+  filter:blur(var(--couture-copy-blur));
+  will-change:transform,opacity,filter;
 }
+.wp-couture-eyebrow {
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin:0;
+  color:#766B5B;
+  font-size:9px;
+  font-weight:700;
+  line-height:1.8;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+.wp-couture-eyebrow span { color:#A68E70; font-family:'Cormorant Garamond',Didot,Georgia,serif; font-size:17px; font-weight:400; }
 .wp-couture-title {
-  max-width:780px; margin-bottom:0; color:#1B1A17;
+  max-width:800px; margin-bottom:0; color:#1B1A17;
   font-family:'Cormorant Garamond',Didot,'Times New Roman',serif;
-  font-size:clamp(4.35rem,6.9vw,7.25rem); font-weight:500;
-  letter-spacing:-.045em; line-height:.9; text-wrap:balance;
+  font-size:clamp(4.5rem,7.35vw,7.8rem); font-weight:500;
+  letter-spacing:-.048em; line-height:.85; text-wrap:balance;
 }
 .wp-couture-title-italic {
-  display:block; margin-top:.09em; color:#92795B; font-style:italic;
-  font-weight:400; letter-spacing:-.055em;
+  display:block; margin-top:.10em; color:#967B59; font-style:italic;
+  font-weight:400; letter-spacing:-.058em;
 }
 .wp-couture-description {
   color:#6F6A60; font-size:clamp(13px,1.03vw,16px); font-weight:400;
@@ -121,32 +155,115 @@
 }
 .wp-couture-signature-rule { display:block; flex:0 0 26px; height:1px; background:#A68E70; }
 .wp-couture-dot { color:#A68E70; }
+
+/* A stack of atelier folios: three planes move at different rates during scroll. */
 .wp-couture-art-wrap {
+  position:relative;
   transform:translate3d(0,var(--couture-art-y),0) scale(var(--couture-art-scale)) rotate(var(--couture-art-rotate));
-  transform-origin:center center; will-change:transform; perspective:1000px;
+  transform-origin:center center;
+  will-change:transform;
+  perspective:1200px;
+}
+.wp-couture-back {
+  position:absolute;
+  inset:2.2% -1.7% -1.6% 3.5%;
+  border:1px solid rgba(121,98,67,.4);
+  background:linear-gradient(142deg,#D8C8B1,#F1E9DC 47%,#C8B699);
+  box-shadow:0 25px 55px rgba(53,43,30,.08);
+  transform-origin:65% 50%;
+  pointer-events:none;
+}
+.wp-couture-back--one {
+  transform:translate3d(0,var(--couture-back-y),-24px) rotate(var(--couture-back-rotate));
+  animation:wp-folio-back-one 1.2s 250ms cubic-bezier(.2,.75,.2,1) both;
+}
+.wp-couture-back--two {
+  inset:1% 1.8% -2.2% 1.3%;
+  background:linear-gradient(130deg,#EAE0D0,#D9CBB7 58%,#F0E8DA);
+  transform:translate3d(0,calc(var(--couture-back-y) * -.45),-12px) rotate(1.25deg);
+  animation:wp-folio-back-two 1.25s 360ms cubic-bezier(.2,.75,.2,1) both;
 }
 .wp-couture-art {
-  position:relative; z-index:1; padding:18px 18px 15px;
-  background:linear-gradient(135deg,rgba(255,255,255,.54),transparent 38%),
-    linear-gradient(148deg,#F1EADF 0%,#F8F4EC 48%,#E7DDCE 100%);
-  border:1px solid rgba(131,111,84,.46);
-  box-shadow:0 30px 65px rgba(46,37,26,.09),0 3px 7px rgba(46,37,26,.04);
-  animation:wp-couture-art-reveal 1.35s 180ms cubic-bezier(.22,.75,.23,1) both;
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  padding:clamp(12px,1.4vw,20px);
+  overflow:hidden;
+  color:#EEE6D9;
+  border:1px solid rgba(186,155,111,.78);
+  background:
+    radial-gradient(ellipse at 50% 36%, rgba(143,116,77,.16), transparent 39%),
+    linear-gradient(145deg,#22231E 0%,#171914 52%,#10120F 100%);
+  box-shadow:0 34px 74px rgba(42,33,23,.18),0 5px 10px rgba(42,33,23,.07),inset 0 0 0 5px rgba(221,197,159,.035);
+  transform-style:preserve-3d;
+  animation:wp-folio-reveal 1.45s 120ms cubic-bezier(.18,.76,.2,1) both;
+}
+.wp-couture-art::before {
+  content:"";
+  position:absolute; inset:7px;
+  border:1px solid rgba(201,174,133,.22);
+  pointer-events:none;
+}
+.wp-couture-art-sheen {
+  position:absolute;
+  z-index:3;
+  inset:-20% -50%;
+  pointer-events:none;
+  opacity:.65;
+  background:linear-gradient(110deg,transparent 37%,rgba(228,207,171,.02) 43%,rgba(228,207,171,.15) 49%,rgba(255,250,239,.05) 52%,transparent 60%);
+  transform:translate3d(var(--couture-sheen-x),0,0) skewX(-8deg);
+  mix-blend-mode:screen;
+  will-change:transform;
 }
 .wp-couture-art-top,.wp-couture-art-bottom {
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-  color:#756652; font-size:7px; font-weight:600; letter-spacing:.17em;
-  line-height:1.6; text-transform:uppercase;
+  position:relative; z-index:4;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  color:#C7B08B; font-size:7px; font-weight:600; letter-spacing:.18em;
+  line-height:1.7; text-transform:uppercase;
 }
-.wp-couture-art-top { border-bottom:1px solid rgba(120,101,76,.25); padding:3px 3px 13px; }
-.wp-couture-emblem { display:block; margin:0 auto; max-height:560px; overflow:visible; }
-.wp-couture-art-bottom { border-top:1px solid rgba(120,101,76,.25); padding:13px 3px 2px; letter-spacing:.13em; }
-.wp-couture-bottom-index { font-family:'Cormorant Garamond',Didot,Georgia,serif; font-size:13px; font-weight:500; letter-spacing:.08em; }
+.wp-couture-art-top { border-bottom:1px solid rgba(199,176,139,.28); padding:4px 4px 14px; }
+.wp-couture-art-wordmark { color:#F0E5D2; letter-spacing:.21em; }
+.wp-couture-art-issue { color:#9F9079; font-size:6px; letter-spacing:.14em; }
+.wp-couture-artwork { position:relative; flex:1; min-height:390px; display:flex; align-items:center; justify-content:center; }
+.wp-couture-emblem { position:relative; z-index:2; display:block; width:100%; max-height:560px; overflow:visible; }
+.wp-emblem-line { stroke-dasharray:1; stroke-dashoffset:1; animation:wp-foil-draw 2.2s 850ms ease-out forwards; }
+.wp-emblem-line--two { animation-delay:1.05s; }
+.wp-emblem-star { transform-box:fill-box; transform-origin:center; animation:wp-star-gleam 5.4s 1.5s ease-in-out infinite; }
+.wp-couture-art-bottom {
+  min-height:72px; border-top:1px solid rgba(199,176,139,.28); padding:14px 4px 3px;
+}
+.wp-couture-art-caption { display:flex; flex-direction:column; gap:5px; }
+.wp-couture-caption-kicker { color:#A9977A; font-size:6px; letter-spacing:.22em; }
+.wp-couture-caption-title {
+  color:#F0E5D2; font-family:'Cormorant Garamond',Didot,Georgia,serif;
+  font-size:clamp(19px,2vw,26px); font-weight:500; letter-spacing:-.02em; text-transform:none;
+}
+.wp-couture-art-index { color:#C7B08B; font-family:'Cormorant Garamond',Didot,Georgia,serif; font-size:15px; letter-spacing:.12em; text-align:right; }
+.wp-couture-art-index small { color:#8E7B60; font-family:'Manrope',sans-serif; font-size:7px; letter-spacing:.2em; }
 .wp-couture-art-shadow {
   position:absolute; z-index:-1; inset:6% -3% -3% 6%;
   border:1px solid rgba(131,111,84,.22); background:rgba(197,179,153,.18);
   transform:rotate(2deg); animation:wp-couture-shadow-reveal 1.3s 360ms cubic-bezier(.22,.75,.23,1) both;
 }
+.wp-couture-art-orbit {
+  position:absolute;
+  z-index:-2;
+  top:12%;
+  right:-4%;
+  width:32%;
+  aspect-ratio:1;
+  border:1px solid rgba(149,122,86,.29);
+  border-radius:50%;
+  pointer-events:none;
+  animation:wp-orbit-drift 16s linear infinite;
+}
+.wp-couture-art-orbit span {
+  position:absolute; top:12%; left:12%; width:5px; height:5px;
+  border-radius:50%; background:#A88D69; box-shadow:0 0 18px rgba(168,141,105,.3);
+}
+.wp-couture-art-orbit span:nth-child(2) { top:auto; left:auto; right:8%; bottom:24%; width:3px; height:3px; }
+.wp-couture-art-orbit span:nth-child(3) { top:auto; left:28%; bottom:-2px; width:4px; height:4px; }
 .wp-couture-bottomline {
   display:flex; width:100%; padding-top:.5rem; padding-bottom:22px; color:#83796A;
   font-size:8px; font-weight:600; letter-spacing:.17em; line-height:1.6; text-transform:uppercase;
@@ -158,26 +275,44 @@
   background:rgba(83,69,52,.12); pointer-events:none;
 }
 .wp-couture-progress-track span {
-  display:block; width:var(--couture-progress-width); height:100%; background:#92795B;
-  transition:width 90ms linear;
+  display:block; width:var(--couture-progress-width); height:100%;
+  background:linear-gradient(90deg,#8D7251,#D8C19C,#9C805A);
+  box-shadow:0 0 13px rgba(150,120,79,.24);
+  transition:width 75ms linear;
 }
-.wp-couture-enter { opacity:0; animation:wp-couture-rise 850ms cubic-bezier(.19,.72,.2,1) forwards; }
+.wp-couture-enter { opacity:0; animation:wp-couture-rise 900ms cubic-bezier(.19,.72,.2,1) forwards; }
 .wp-couture-enter--title { animation-delay:100ms; }
-.wp-couture-enter--body { animation-delay:220ms; }
-.wp-couture-enter--actions { animation-delay:330ms; }
-.wp-couture-enter--signature { animation-delay:430ms; }
+.wp-couture-enter--body { animation-delay:230ms; }
+.wp-couture-enter--actions { animation-delay:360ms; }
+.wp-couture-enter--signature { animation-delay:470ms; }
 @keyframes wp-couture-rise {
-  from { opacity:0; transform:translate3d(0,28px,0); filter:blur(3px); }
+  from { opacity:0; transform:translate3d(0,34px,0); filter:blur(5px); }
   to { opacity:1; transform:translate3d(0,0,0); filter:blur(0); }
 }
-@keyframes wp-couture-art-reveal {
-  from { opacity:0; clip-path:inset(8% 0 92% 0); transform:translate3d(0,25px,0); }
-  to { opacity:1; clip-path:inset(0 0 0 0); transform:translate3d(0,0,0); }
+@keyframes wp-folio-reveal {
+  0% { opacity:0; clip-path:inset(100% 0 0 0); transform:translate3d(0,65px,0) rotateY(-7deg) rotateZ(2deg); }
+  70% { opacity:1; clip-path:inset(0 0 0 0); }
+  100% { opacity:1; clip-path:inset(0 0 0 0); transform:translate3d(0,0,0) rotateY(0) rotateZ(0); }
+}
+@keyframes wp-folio-back-one {
+  from { opacity:0; transform:translate3d(20px,24px,-24px) rotate(-7deg); }
+  to { opacity:1; transform:translate3d(0,var(--couture-back-y),-24px) rotate(var(--couture-back-rotate)); }
+}
+@keyframes wp-folio-back-two {
+  from { opacity:0; transform:translate3d(-12px,30px,-12px) rotate(5deg); }
+  to { opacity:1; transform:translate3d(0,calc(var(--couture-back-y) * -.45),-12px) rotate(1.25deg); }
 }
 @keyframes wp-couture-shadow-reveal {
   from { opacity:0; transform:translate3d(10px,15px,0) rotate(0deg); }
   to { opacity:1; transform:translate3d(0,0,0) rotate(2deg); }
 }
+@keyframes wp-foil-draw { to { stroke-dashoffset:0; } }
+@keyframes wp-star-gleam {
+  0%,70%,100% { transform:rotate(0) scale(1); filter:brightness(1); }
+  78% { transform:rotate(45deg) scale(1.18); filter:brightness(1.55); }
+  84% { transform:rotate(0) scale(1); filter:brightness(1.1); }
+}
+@keyframes wp-orbit-drift { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
 .wp-scroll-reveal {
   transition:opacity 850ms cubic-bezier(.2,.72,.2,1),transform 850ms cubic-bezier(.2,.72,.2,1),filter 850ms cubic-bezier(.2,.72,.2,1);
   transition-delay:var(--wp-reveal-delay,0ms);
@@ -192,23 +327,28 @@
 .wp-scroll-reveal:nth-child(3) { --wp-reveal-delay:220ms; }
 @media (max-width:1023px) {
   .wp-couture-hero { min-height:auto; }
-  .wp-couture-content { min-height:auto; padding-top:58px; padding-bottom:32px; }
-  .wp-couture-art-wrap { width:min(100%,460px); }
-  .wp-couture-title { font-size:clamp(3.7rem,9.5vw,6.2rem); max-width:740px; }
+  .wp-couture-content { min-height:auto; padding-top:56px; padding-bottom:34px; }
+  .wp-couture-art-wrap { width:min(100%,480px); }
+  .wp-couture-title { font-size:clamp(3.85rem,9.5vw,6.3rem); max-width:740px; }
+  .wp-couture-artwork { min-height:350px; }
   .wp-couture-bottomline { padding-top:8px; }
 }
 @media (max-width:639px) {
-  .wp-couture-title { font-size:clamp(3.35rem,15vw,5.2rem); line-height:.94; }
+  .wp-couture-title { font-size:clamp(3.3rem,15vw,5.2rem); line-height:.91; }
+  .wp-couture-eyebrow { gap:8px; font-size:8px; letter-spacing:.15em; }
   .wp-couture-signature { flex-wrap:wrap; gap:8px; font-size:7px; letter-spacing:.11em; }
   .wp-couture-bottomline { align-items:flex-start; flex-direction:column; gap:13px; font-size:7px; letter-spacing:.13em; }
   .wp-couture-art { padding:12px 12px 11px; }
+  .wp-couture-artwork { min-height:280px; }
   .wp-couture-art-top,.wp-couture-art-bottom { font-size:6px; letter-spacing:.1em; }
+  .wp-couture-art-caption-title { font-size:19px; }
+  .wp-couture-art-orbit { right:-2%; width:22%; }
 }
 @media (prefers-reduced-motion:reduce) {
-  .wp-couture-enter,.wp-couture-art,.wp-couture-art-shadow {
+  .wp-couture-enter,.wp-couture-art,.wp-couture-back,.wp-couture-art-shadow,.wp-emblem-line,.wp-emblem-star,.wp-couture-art-orbit {
     animation:none!important; opacity:1!important; filter:none!important; clip-path:none!important;
   }
-  .wp-couture-copy,.wp-couture-art-wrap,.wp-couture-progress-track span,.wp-scroll-reveal,.wp-couture-button,.wp-couture-scroll-cue {
+  .wp-couture-copy,.wp-couture-art-wrap,.wp-couture-progress-track span,.wp-scroll-reveal,.wp-couture-button,.wp-couture-scroll-cue,.wp-couture-art-sheen {
     transform:none!important; transition:none!important; will-change:auto;
   }
 }
