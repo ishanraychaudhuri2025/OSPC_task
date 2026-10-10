@@ -18,12 +18,12 @@ service cloud.firestore {
       return request.auth != null && request.auth.uid == userId;
     }
 
-    // Newsletter Subscribers: Public clients cannot list or query records
+    // Newsletter subscriber data is server-only.
+    // The Vercel API writes via Firebase Admin SDK after validation and anti-abuse checks.
+    // Admin SDK calls bypass these rules; all browser SDK access is denied to prevent
+    // email-subscription enumeration and direct bypass of the protected API endpoint.
     match /newsletterSubscribers/{subscriberId} {
-      allow list: if false;
-      allow get: if subscriberId is string && subscriberId.size() == 64;
-      allow create: if subscriberId is string && subscriberId.size() == 64 && isValidSubscriber(request.resource.data);
-      allow update, delete: if false;
+      allow read, write: if false;
     }
 
     // User Profile: Accessible exclusively by the authenticated user
