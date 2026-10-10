@@ -32,7 +32,7 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[#D8D8CF] bg-[#F6F3EC]/90 backdrop-blur-md transition-colors">
+    <header className="sticky top-0 z-40 w-full border-b border-[#D8D8CF] bg-[#F2EFE8]/90 backdrop-blur-md transition-colors">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
         {/* WP signature mark from the supplied logo artwork */}
         <Link
@@ -54,7 +54,7 @@ export function Header() {
             <path d="M62 5L65 13L73 16L65 19L62 27L59 19L51 16L59 13Z" fill="#9B7658" />
           </svg>
           <span className="flex min-w-0 flex-col justify-center">
-            <span className="whitespace-nowrap font-serif-display text-lg sm:text-xl font-normal tracking-[0.025em] text-[#171717] transition-colors group-hover:text-[#6F503B]">
+            <span className="whitespace-nowrap font-serif-display text-lg sm:text-xl font-normal tracking-[0.025em] text-[#171717] transition-colors group-hover:text-[#92795B]">
               WHY, PRACTICED
             </span>
             <span className="mt-0.5 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#666D68]">
@@ -80,7 +80,7 @@ export function Header() {
                 {item.label}
                 {isActive && (
                   <span
-                    className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#D64B37]"
+                    className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#92795B]"
                     aria-hidden="true"
                   />
                 )}
@@ -100,7 +100,7 @@ export function Header() {
                   : 'border-[#D8D8CF] bg-[#FFFEFA] text-[#171B1B] hover:border-[#171B1B]'
               }`}
             >
-              <User className="h-3.5 w-3.5 text-[#D64B37]" aria-hidden="true" />
+              <User className="h-3.5 w-3.5 text-[#92795B]" aria-hidden="true" />
               <span>Dashboard</span>
             </Link>
           ) : (
@@ -119,7 +119,7 @@ export function Header() {
 
           <Link
             to="/practice"
-            className="inline-flex items-center gap-1.5 border border-[#171B1B] bg-[#171B1B] px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#FFFEFA] hover:bg-[#D64B37] hover:border-[#D64B37] transition-all"
+            className="inline-flex items-center gap-1.5 border border-[#171B1B] bg-[#171B1B] px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#FFFEFA] hover:bg-[#92795B] hover:border-[#92795B] transition-all"
           >
             <span>Launch Canvas</span>
             <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -131,7 +131,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="inline-flex items-center justify-center p-2 text-[#171B1B] hover:text-[#D64B37] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D64B37]"
+            className="inline-flex items-center justify-center p-2 text-[#171B1B] hover:text-[#92795B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#92795B]"
             aria-expanded={mobileMenuOpen}
             aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           >
@@ -162,12 +162,12 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center justify-between border-b border-[#D8D8CF]/50 pb-3 text-sm uppercase tracking-wider ${
                     isActive
-                      ? 'font-bold text-[#D64B37]'
-                      : 'font-semibold text-[#171B1B] hover:text-[#D64B37]'
+                      ? 'font-bold text-[#92795B]'
+                      : 'font-semibold text-[#171B1B] hover:text-[#92795B]'
                   }`}
                 >
                   <span>{item.label}</span>
-                  {isActive && <span className="text-[10px] text-[#D64B37]">Current</span>}
+                  {isActive && <span className="text-[10px] text-[#92795B]">Current</span>}
                 </Link>
               );
             })}
@@ -179,14 +179,14 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex w-full items-center justify-center gap-2 border border-[#171B1B] bg-[#171B1B] py-3 text-xs font-semibold uppercase tracking-wider text-[#FFFEFA]"
                 >
-                  <User className="h-4 w-4 text-[#D64B37]" aria-hidden="true" />
+                  <User className="h-4 w-4 text-[#92795B]" aria-hidden="true" />
                   <span>My Dashboard</span>
                 </Link>
               ) : (
                 <Link
                   to="/auth"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex w-full items-center justify-center gap-2 border border-[#D8D8CF] bg-[#F6F3EC] py-3 text-xs font-semibold uppercase tracking-wider text-[#171B1B]"
+                  className="flex w-full items-center justify-center gap-2 border border-[#D8D8CF] bg-[#F2EFE8] py-3 text-xs font-semibold uppercase tracking-wider text-[#171B1B]"
                 >
                   <LogIn className="h-4 w-4" aria-hidden="true" />
                   <span>Sign In / Create Account</span>
