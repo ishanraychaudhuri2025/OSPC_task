@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle2, AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Link } from '../router/Router';
+import { getRecaptchaEnterpriseToken } from '../lib/recaptchaEnterprise';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'already_subscribed' | 'error';
 
@@ -46,6 +47,7 @@ export function CommunityPage() {
     setStatus('submitting');
 
     try {
+      const recaptchaToken = await getRecaptchaEnterpriseToken('NEWSLETTER_SIGNUP');
       const response = await fetch('/api/newsletter', {
         method: 'POST',
         headers: {
@@ -57,6 +59,7 @@ export function CommunityPage() {
           interest: interest || undefined,
           consent: true,
           website: website, // Honeypot
+          recaptchaToken,
         }),
       });
 
@@ -75,7 +78,7 @@ export function CommunityPage() {
       }
     } catch (err) {
       setStatus('error');
-      setErrorMessage('Could not connect to the registration service. Please verify your internet connection and try again.');
+      setErrorMessage('Could not complete the signup request or its anti-abuse verification. Please refresh the page and try again.');
     }
   };
 
