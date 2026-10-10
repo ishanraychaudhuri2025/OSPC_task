@@ -197,6 +197,7 @@ Configure environment variables in **Vercel → Project → Settings → Environ
 | `VITE_FIREBASE_MESSAGING_SENDER_ID` | Firebase messaging sender ID |
 | `VITE_FIREBASE_APP_ID` | Firebase web app ID |
 | `VITE_FIREBASE_DATABASE_ID` | Exact Firestore database ID used by the application |
+| `VITE_FIREBASE_APP_CHECK_RECAPTCHA_ENTERPRISE_KEY` | Public reCAPTCHA Enterprise site key registered for Firebase App Check; this enables client attestation but enforcement is configured in Firebase Console |
 | `VITE_RECAPTCHA_ENTERPRISE_SITE_KEY` | Public score-based reCAPTCHA Enterprise site key for the newsletter form; restrict allowed domains in Google Cloud |
 
 ### Server — required for the Vercel newsletter function
@@ -230,6 +231,7 @@ To reproduce the deployment:
 4. Add the server-only Firebase Admin variables needed by `api/newsletter.ts`.
 5. Deploy and inspect the build logs if deployment fails.
 6. In Firebase Authentication settings, add the deployed Vercel hostname under **Authorized domains** if sign-in flows require it.
+7. To activate Firebase App Check, create a score-based reCAPTCHA Enterprise web key restricted to the deployed hostnames, register the web app in **Firebase Console → Security → App Check**, and set `VITE_FIREBASE_APP_CHECK_RECAPTCHA_ENTERPRISE_KEY` in Vercel. Initially monitor App Check metrics; only enforce Authentication and Firestore after verifying legitimate traffic continues to work.
 7. Test the deployed routes directly, including refreshes on `/ideas`, `/practice`, `/podcast`, `/dashboard`, `/auth` and `/community`.
 8. Submit a valid newsletter opt-in and confirm that a corresponding record exists in the intended Firestore database.
 
@@ -242,6 +244,7 @@ Every environment-variable change requires a new Vercel deployment to affect the
 - Service-account credentials must remain server-side and must never use a `VITE_` prefix.
 - The newsletter API supports server-side reCAPTCHA Enterprise assessments. Once any server-side `RECAPTCHA_ENTERPRISE_*` configuration is supplied, verification is enforced by default; incomplete configuration fails closed. Keep the service-account JSON in Vercel environment variables and grant it only the permissions it needs.
 - The reCAPTCHA site key is public client configuration, not a secret. Restrict it to the production hostnames in Google Cloud. The assessment service-account key is private and must never be committed.
+- Firebase App Check is initialized in the web client only when `VITE_FIREBASE_APP_CHECK_RECAPTCHA_ENTERPRISE_KEY` is configured. This does not itself enforce access: register the app and enable service enforcement in Firebase Console after reviewing App Check metrics.
 - The per-instance newsletter request throttle is best-effort protection for serverless deployments; use Vercel Firewall or a distributed rate limiter for stronger cross-instance enforcement.
 - The supplied Firebase AI Logic/App Check documentation is only directly relevant if this app makes Gemini API calls. The current repository does not make Gemini model requests; do not add a Gemini API key to the frontend.
 - `.gitignore` excludes populated `.env*` files (except `.env.example`), generated applet configuration, private-key files and common service-account JSON filenames.
