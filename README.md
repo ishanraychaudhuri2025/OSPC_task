@@ -249,6 +249,7 @@ Every environment-variable change requires a new Vercel deployment to affect the
 - The supplied Firebase AI Logic/App Check documentation is only directly relevant if this app makes Gemini API calls. The current repository does not make Gemini model requests; do not add a Gemini API key to the frontend.
 - `.gitignore` excludes populated `.env*` files (except `.env.example`), generated applet configuration, private-key files and common service-account JSON filenames.
 - Never log raw subscriber emails or return raw database exceptions to public clients.
+- Newsletter subscriber records are server-only: Firestore rules deny direct browser reads and writes to `newsletterSubscribers`. The API uses Firebase Admin SDK credentials to persist valid opt-ins; configure the server credentials in Vercel/AI Studio and never restore public client access to this collection.
 - Review [`firestore.rules`](firestore.rules) whenever data paths or write behaviour change. Test access control with both authenticated and unauthenticated clients before treating a deployment as production-ready.
 
 ## Project structure
