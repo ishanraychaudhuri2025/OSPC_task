@@ -1,7 +1,5 @@
 import type { Request, Response } from 'express';
 import crypto from 'crypto';
-import fs from 'fs';
-import path from 'path';
 
 const ALLOWED_INTERESTS = ['Purpose', 'Leadership', 'Trust & Teams', 'Infinite Mindset'] as const;
 
@@ -17,46 +15,8 @@ let dbAdapter: DatabaseAdapter | null = null;
 async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
   if (dbAdapter) return dbAdapter;
 
-  const configPath = path.resolve(process.cwd(), 'firebase-applet-config.json');
-  const isPreview = fs.existsSync(configPath);
-
-  // 1. PREVIEW RUNTIME (Google AI Studio / Local)
-  // Uses platform-provided firebase-applet-config.json natively.
-  // Does NOT require any Admin SDK service-account credentials or environment variables.
-  if (isPreview) {
-    try {
-      const rawConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-      const { initializeApp, getApps, getApp } = await import('firebase/app');
-      const { getFirestore, doc, runTransaction } = await import('firebase/firestore');
-
-      const app = !getApps().length ? initializeApp(rawConfig) : getApp();
-      const clientDb = getFirestore(app, rawConfig.firestoreDatabaseId);
-
-      dbAdapter = {
-        async checkAndSaveSubscriber(docId, payload) {
-          const docRef = doc(clientDb, 'newsletterSubscribers', docId);
-          return await runTransaction(clientDb, async (transaction) => {
-            const snap = await transaction.get(docRef);
-            if (snap.exists()) {
-              return 'already_subscribed';
-            }
-            transaction.set(docRef, payload);
-            return 'subscribed';
-          });
-        },
-      };
-
-      console.log('[Newsletter API] Initialized via native preview configuration.');
-      return dbAdapter;
-    } catch (err: any) {
-      console.error('[Newsletter API] Preview configuration initialization error:', err.message);
-      return null;
-    }
-  }
-
-  // 2. PRODUCTION RUNTIME (Vercel / External Serverless)
-  // Requires secure server-side Firebase Admin SDK credentials.
-  // Never falls back to client Web SDK if Admin configuration is absent or fails.
+  // All newsletter writes go through the server-side Admin SDK.
+  // Never fall back to public-client Firestore writes from this API route.
   const hasServiceAccount =
     Boolean(process.env.FIREBASE_SERVICE_ACCOUNT_KEY) ||
     Boolean(process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY);
