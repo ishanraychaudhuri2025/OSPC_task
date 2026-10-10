@@ -190,7 +190,7 @@ async function getGoogleCloudAccessToken(serviceAccountJson: string): Promise<st
     exp: now + 3600,
   }));
   const unsignedAssertion = `${header}.${claims}`;
-  const privateKey = account.private_key.replace(/\\\\n/g, '\\n');
+  const privateKey = account.private_key.replace(/\\n/g, '\n');
   const signer = crypto.createSign('RSA-SHA256');
   signer.update(unsignedAssertion);
   signer.end();
