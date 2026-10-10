@@ -22,6 +22,10 @@ function PageContent() {
 
   // Dynamic document title update per route
   useEffect(() => {
+    // SPA navigation should start each route at its top; otherwise Home can reopen
+    // halfway through the hero and make the headline appear clipped below the sticky header.
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+
     if (currentPath === '/') {
       document.title = 'WHY, PRACTICED — Independent Editorial Guide to Purpose & Leadership';
     } else if (currentPath === '/ideas') {
