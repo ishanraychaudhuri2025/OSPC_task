@@ -121,6 +121,25 @@ async function readOwnRecords(db: any, uid: string, collectionName: 'subscriptio
   return snapshot.docs.map((docSnap: any) => mapRecord(docSnap.id, docSnap.data() || {}, kind));
 }
 
+async function readOptionalRecords(
+  db: any,
+  uid: string,
+  collectionName: 'subscriptions' | 'applications' | 'waitlist',
+  kind: 'subscription' | 'application' | 'waitlist',
+): Promise<{ records: ActivityRecord[]; available: boolean }> {
+  try {
+    return { records: await readOwnRecords(db, uid, collectionName, kind), available: true };
+  } catch (error: any) {
+    // Optional panels must not hide a valid Notes on WHY subscription.
+    // Log only the collection label and an error code; never record user data.
+    console.warn('[Community Activity API] Optional activity collection unavailable.', {
+      collection: collectionName,
+      code: typeof error?.code === 'string' ? error.code : 'unknown',
+    });
+    return { records: [], available: false };
+  }
+}
+
 export default async function handler(req: Request, res: Response): Promise<void> {
   res.setHeader('Cache-Control', 'private, no-store, max-age=0');
 
@@ -137,23 +156,45 @@ export default async function handler(req: Request, res: Response): Promise<void
     return;
   }
 
+  let stage = 'admin_initialization';
   try {
     const { auth, db } = await getAdminServices();
-    const decodedToken = await auth.verifyIdToken(match[1]);
-    const uid = decodedToken.uid as string;
-    const accountEmail = typeof decodedToken.email === 'string' ? decodedToken.email.trim().toLowerCase() : '';
 
-    if (!uid || !accountEmail) {
-      res.status(403).json({ ok: false, message: 'Your account needs an email address to match study-list records.' });
+    stage = 'session_verification';
+    let decodedToken: any;
+    try {
+      decodedToken = await auth.verifyIdToken(match[1]);
+    } catch (error: any) {
+      console.warn('[Community Activity API] Session verification failed.', {
+        code: typeof error?.code === 'string' ? error.code : 'unknown',
+      });
+      res.status(401).json({
+        ok: false,
+        diagnostic: 'SESSION_VERIFICATION_FAILED',
+        message: 'Your session could not be verified. Please sign in again.',
+      });
       return;
     }
 
+    const uid = decodedToken.uid as string;
+    const accountEmail = typeof decodedToken.email === 'string' ? decodedToken.email.trim().toLowerCase() : '';
+    if (!uid || !accountEmail) {
+      res.status(403).json({
+        ok: false,
+        diagnostic: 'ACCOUNT_EMAIL_MISSING',
+        message: 'Your account needs an email address to match study-list records.',
+      });
+      return;
+    }
+
+    stage = 'newsletter_record_lookup';
     const subscriberId = crypto.createHash('sha256').update(accountEmail).digest('hex');
-    const [subscriberDoc, otherSubscriptions, applications, waitlist] = await Promise.all([
-      db.collection('newsletterSubscribers').doc(subscriberId).get(),
-      readOwnRecords(db, uid, 'subscriptions', 'subscription'),
-      readOwnRecords(db, uid, 'applications', 'application'),
-      readOwnRecords(db, uid, 'waitlist', 'waitlist'),
+    const subscriberDoc = await db.collection('newsletterSubscribers').doc(subscriberId).get();
+
+    const [otherSubscriptionsResult, applicationsResult, waitlistResult] = await Promise.all([
+      readOptionalRecords(db, uid, 'subscriptions', 'subscription'),
+      readOptionalRecords(db, uid, 'applications', 'application'),
+      readOptionalRecords(db, uid, 'waitlist', 'waitlist'),
     ]);
 
     const subscriptions: ActivityRecord[] = [];
@@ -170,27 +211,37 @@ export default async function handler(req: Request, res: Response): Promise<void
           : 'Independent study notes opt-in recorded.',
       });
     }
-    subscriptions.push(...otherSubscriptions);
+    subscriptions.push(...otherSubscriptionsResult.records);
 
     res.status(200).json({
       ok: true,
       accountEmail,
       subscriptions,
-      applications,
-      waitlist,
+      applications: applicationsResult.records,
+      waitlist: waitlistResult.records,
+      optionalSectionsAvailable: {
+        subscriptions: otherSubscriptionsResult.available,
+        applications: applicationsResult.available,
+        waitlist: waitlistResult.available,
+      },
       emailDeliveryEnabled: false,
       activityUpdatedAt: new Date().toISOString(),
     });
   } catch (error: any) {
-    // Log a generic diagnostic only; do not log the ID token, email, document content, or credentials.
-    console.error('[Community Activity API] Could not load authenticated activity.', {
-      code: typeof error?.code === 'string' ? error.code : 'unknown',
-    });
-    const authError = typeof error?.code === 'string' && error.code.startsWith('auth/');
-    res.status(authError ? 401 : 503).json({
+    // Log only a stable stage label and error code. Never log the ID token,
+    // email, document content, credentials, or the raw exception message.
+    const code = typeof error?.code === 'string' ? error.code : 'unknown';
+    console.error('[Community Activity API] Required activity lookup failed.', { stage, code });
+    const diagnosticByStage: Record<string, string> = {
+      admin_initialization: 'ACTIVITY_SERVICE_INITIALIZATION_FAILED',
+      session_verification: 'SESSION_VERIFICATION_FAILED',
+      newsletter_record_lookup: 'SUBSCRIPTION_LOOKUP_FAILED',
+    };
+    res.status(503).json({
       ok: false,
-      message: authError
-        ? 'Your session could not be verified. Please sign in again.'
+      diagnostic: diagnosticByStage[stage] || 'ACTIVITY_LOOKUP_FAILED',
+      message: stage === 'newsletter_record_lookup'
+        ? 'Your subscription status could not be retrieved right now. Please refresh and try again.'
         : 'Your activity is temporarily unavailable. Please try again shortly.',
     });
   }
