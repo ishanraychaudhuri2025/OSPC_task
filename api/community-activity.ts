@@ -80,7 +80,8 @@ async function getAdminServices(): Promise<AdminServices> {
     throw new Error('Firebase Admin credentials are not configured.');
   }
 
-  const [{ initializeApp, getApps, cert }, { getAuth }, { getFirestore }] = await Promise.all([
+  // Keep Firebase Admin initialization consistent with the already-working newsletter API.
+  const [{ initializeApp: initAdminApp, getApps: getAdminApps, getApp: getAdminApp, cert }, { getAuth }, { getFirestore }] = await Promise.all([
     import('firebase-admin/app'),
     import('firebase-admin/auth'),
     import('firebase-admin/firestore'),
@@ -91,7 +92,8 @@ async function getAdminServices(): Promise<AdminServices> {
     try {
       credentialConfig = JSON.parse(rawServiceAccount);
     } catch {
-      throw new Error('Firebase service-account configuration is not valid JSON.');
+      // Match newsletter.ts exactly for compatibility with the configured Vercel secret.
+      credentialConfig = rawServiceAccount;
     }
   } else {
     credentialConfig = {
@@ -101,11 +103,12 @@ async function getAdminServices(): Promise<AdminServices> {
     };
   }
 
-  const existingApp = getApps().find((app: any) => app.name === '[DEFAULT]');
-  const adminApp = existingApp || initializeApp({
-    credential: cert(credentialConfig),
-    projectId,
-  });
+  const adminApp = !getAdminApps().length
+    ? initAdminApp({
+        credential: cert(credentialConfig),
+        projectId,
+      })
+    : getAdminApp();
 
   cachedAdminServices = {
     auth: getAuth(adminApp),
