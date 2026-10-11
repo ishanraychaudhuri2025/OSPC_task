@@ -632,10 +632,10 @@ export function CommunityPage() {
                         {activity.applications.map((record) => <ActivityRecordCard key={record.id} record={record} />)}
                       </div>
                     ) : (
-                      <div className="h-full min-h-36 border border-dashed border-[#D8D0C3] bg-[#FFFEFA] p-5">
-                        <p className="font-serif-display text-xl text-[#1B1A17]">No application records</p>
-                        <p className="mt-2 text-xs leading-relaxed text-[#777268]">
-                          No application records are linked to this account in this site. Applications submitted on other websites will not appear here automatically.
+                      <div className="flex min-h-36 flex-col justify-center border border-dashed border-[#D8D0C3] bg-[#FFFEFA] p-5">
+                        <p className="font-serif-display text-xl leading-tight text-[#1B1A17]">No application records</p>
+                        <p className="mt-2 max-w-sm text-xs leading-relaxed text-[#777268]">
+                          Applications submitted through this site will appear here with their current status.
                         </p>
                       </div>
                     )}
@@ -659,10 +659,10 @@ export function CommunityPage() {
                         {activity.waitlist.map((record) => <ActivityRecordCard key={record.id} record={record} />)}
                       </div>
                     ) : (
-                      <div className="h-full min-h-36 border border-dashed border-[#D8D0C3] bg-[#FFFEFA] p-5">
-                        <p className="font-serif-display text-xl text-[#1B1A17]">No waitlist records</p>
-                        <p className="mt-2 text-xs leading-relaxed text-[#777268]">
-                          No waitlist entries are linked to this account in this site. If a waitlist is introduced here, its status can appear in this panel.
+                      <div className="flex min-h-36 flex-col justify-center border border-dashed border-[#D8D0C3] bg-[#FFFEFA] p-5">
+                        <p className="font-serif-display text-xl leading-tight text-[#1B1A17]">No waitlist records</p>
+                        <p className="mt-2 max-w-sm text-xs leading-relaxed text-[#777268]">
+                          Any waitlist entry recorded by this site will appear here with its latest status.
                         </p>
                       </div>
                     )}
