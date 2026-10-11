@@ -86,7 +86,7 @@ export function CommunityPage() {
     setActivityDiagnostic('');
     try {
       const token = await user.getIdToken();
-      const response = await fetch('/api/community-activity', {
+      const response = await fetch('/api/newsletter', {
         method: 'GET',
         headers: { Authorization: `Bearer ${token}` },
         cache: 'no-store',
