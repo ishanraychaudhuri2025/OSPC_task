@@ -389,11 +389,24 @@ export default async function handler(req: Request, res: Response): Promise<void
 
     try {
       const subscriberId = crypto.createHash('sha256').update(accountEmail).digest('hex');
+      // The Notes on WHY record is the primary status. Optional user activity collections
+      // are read independently so one missing/unavailable collection cannot hide it.
       const subscriber = await adapter.getSubscriberByDocId(subscriberId);
+      const readOptional = async (collectionName: 'subscriptions' | 'applications' | 'waitlist') => {
+        try {
+          return await adapter!.getUserActivity(uid, collectionName);
+        } catch (optionalError: any) {
+          console.warn('[Newsletter API] Optional activity list unavailable.', {
+            collection: collectionName,
+            code: typeof optionalError?.code === 'string' ? optionalError.code : 'unknown',
+          });
+          return [];
+        }
+      };
       const [subscriptionDocs, applicationDocs, waitlistDocs] = await Promise.all([
-        adapter.getUserActivity(uid, 'subscriptions'),
-        adapter.getUserActivity(uid, 'applications'),
-        adapter.getUserActivity(uid, 'waitlist'),
+        readOptional('subscriptions'),
+        readOptional('applications'),
+        readOptional('waitlist'),
       ]);
 
       const subscriptions: ActivityRecord[] = [];
