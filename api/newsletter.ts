@@ -81,50 +81,44 @@ function parseServiceAccount(rawValue: string): Record<string, unknown> {
   const raw = rawValue.trim();
   const candidates = [raw];
 
-  // Support service-account JSON pasted normally, JSON-encoded as a string,
-  // or base64-encoded. Never log or return the contents of the credential.
+  // Some environment managers store the JSON as a quoted string. If so,
+  // try its contents as well as the raw representation.
   try {
-    const decodedString = JSON.parse(raw);
-    if (typeof decodedString === 'string') candidates.push(decodedString);
-    else if (decodedString && typeof decodedString === 'object') {
-      const config = decodedString as Record<string, unknown>;
-      if (typeof config.private_key === 'string') {
+    const topLevel: unknown = JSON.parse(raw);
+    if (typeof topLevel === 'string') {
+      candidates.push(topLevel);
+    } else if (topLevel && typeof topLevel === 'object') {
+      const config = topLevel as Record<string, unknown>;
+      if (typeof config.client_email === 'string' && typeof config.private_key === 'string') {
         config.private_key = config.private_key.replace(/\\n/g, '\n');
+        return config;
       }
-      return config;
     }
   } catch {
-    // Continue to the base64 candidate below.
+    // Continue with plain/base64 candidates.
   }
 
+  // Also accept base64-encoded JSON if the user stored that representation.
   try {
-    const base64Decoded = Buffer.from(raw, 'base64').toString('utf8').trim();
-    if (base64Decoded && base64Decoded !== raw) candidates.push(base64Decoded);
+    const decoded = Buffer.from(raw, 'base64').toString('utf8').trim();
+    if (decoded && decoded !== raw) candidates.push(decoded);
   } catch {
-    // Invalid base64 isn't fatal if the plain JSON candidate is valid.
+    // Try other candidates.
   }
 
   for (const candidate of candidates) {
     try {
-      const parsed = JSON.parse(candidate);
-      if (typeof parsed === 'string') {
-        const nested = JSON.parse(parsed) as Record<string, unknown>;
-        if (typeof nested.private_key === 'string') nested.private_key = nested.private_key.replace(/\\n/g, '\n');
-        if (nested && typeof nested === 'object' && typeof nested.client_email === 'string' && typeof nested.private_key === 'string') {
-          return nested;
-        }
-      } else if (
-        parsed &&
-        typeof parsed === 'object' &&
-        typeof (parsed as Record<string, unknown>).client_email === 'string' &&
-        typeof (parsed as Record<string, unknown>).private_key === 'string'
-      ) {
-        const config = parsed as Record<string, unknown>;
-        config.private_key = (config.private_key as string).replace(/\\n/g, '\n');
-        return config;
-      }
+      let parsed: unknown = JSON.parse(candidate);
+      if (typeof parsed === 'string') parsed = JSON.parse(parsed);
+      if (!parsed || typeof parsed !== 'object') continue;
+
+      const config = parsed as Record<string, unknown>;
+      if (typeof config.client_email !== 'string' || typeof config.private_key !== 'string') continue;
+
+      config.private_key = config.private_key.replace(/\\n/g, '\n');
+      return config;
     } catch {
-      // Try the next representation.
+      // Try next representation.
     }
   }
 
