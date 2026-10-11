@@ -66,21 +66,81 @@ function mapActivityRecord(id: string, data: Record<string, any>, kind: 'subscri
 }
 
 let dbAdapter: DatabaseAdapter | null = null;
+let dbAdapterFailureDiagnostic: string | null = null;
+
+function safeDiagnosticCode(error: any): string {
+  const candidate = typeof error?.code === 'string'
+    ? error.code
+    : typeof error?.name === 'string'
+      ? error.name
+      : 'UNKNOWN';
+  return candidate.toUpperCase().replace(/[^A-Z0-9_-]/g, '_').slice(0, 48) || 'UNKNOWN';
+}
+
+function parseServiceAccount(rawValue: string): Record<string, unknown> {
+  const raw = rawValue.trim();
+  const candidates = [raw];
+
+  // Support service-account JSON pasted normally, JSON-encoded as a string,
+  // or base64-encoded. Never log or return the contents of the credential.
+  try {
+    const decodedString = JSON.parse(raw);
+    if (typeof decodedString === 'string') candidates.push(decodedString);
+    else if (decodedString && typeof decodedString === 'object') {
+      const config = decodedString as Record<string, unknown>;
+      if (typeof config.private_key === 'string') {
+        config.private_key = config.private_key.replace(/\\n/g, '\n');
+      }
+      return config;
+    }
+  } catch {
+    // Continue to the base64 candidate below.
+  }
+
+  try {
+    const base64Decoded = Buffer.from(raw, 'base64').toString('utf8').trim();
+    if (base64Decoded && base64Decoded !== raw) candidates.push(base64Decoded);
+  } catch {
+    // Invalid base64 isn't fatal if the plain JSON candidate is valid.
+  }
+
+  for (const candidate of candidates) {
+    try {
+      const parsed = JSON.parse(candidate);
+      if (typeof parsed === 'string') {
+        const nested = JSON.parse(parsed) as Record<string, unknown>;
+        if (typeof nested.private_key === 'string') nested.private_key = nested.private_key.replace(/\\n/g, '\n');
+        if (nested && typeof nested === 'object' && typeof nested.client_email === 'string' && typeof nested.private_key === 'string') {
+          return nested;
+        }
+      } else if (
+        parsed &&
+        typeof parsed === 'object' &&
+        typeof (parsed as Record<string, unknown>).client_email === 'string' &&
+        typeof (parsed as Record<string, unknown>).private_key === 'string'
+      ) {
+        const config = parsed as Record<string, unknown>;
+        config.private_key = (config.private_key as string).replace(/\\n/g, '\n');
+        return config;
+      }
+    } catch {
+      // Try the next representation.
+    }
+  }
+
+  throw new Error('SERVICE_ACCOUNT_JSON_INVALID');
+}
 
 async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
   if (dbAdapter) return dbAdapter;
 
-  // All newsletter writes go through the server-side Admin SDK.
-  // Never fall back to public-client Firestore writes from this API route.
-  const hasServiceAccountKey = Boolean(process.env.FIREBASE_SERVICE_ACCOUNT_KEY?.trim());
-  const hasSplitServiceAccount = Boolean(
-    process.env.FIREBASE_CLIENT_EMAIL?.trim() && process.env.FIREBASE_PRIVATE_KEY?.trim()
-  );
-  const hasServiceAccount = hasServiceAccountKey || hasSplitServiceAccount;
+  dbAdapterFailureDiagnostic = null;
+  const rawServiceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_KEY?.trim();
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL?.trim();
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.trim();
+  const hasServiceAccountKey = Boolean(rawServiceAccount);
+  const hasSplitServiceAccount = Boolean(clientEmail && privateKey);
 
-  // Match src/lib/firebase.ts: prefer explicit server variables, then the existing
-  // Vite-configured IDs, then this app's established Firebase project/database defaults.
-  // These IDs are not secrets; Admin credentials remain mandatory.
   const targetProjectId =
     process.env.FIREBASE_PROJECT_ID ||
     process.env.VITE_FIREBASE_PROJECT_ID ||
@@ -90,13 +150,12 @@ async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
     process.env.VITE_FIREBASE_DATABASE_ID ||
     'ai-studio-9a10e882-4e4e-4882-bc66-23bde83789c9';
 
-  if (!hasServiceAccount) {
-    // Log only presence flags, never secret values.
-    console.error('[Newsletter API] Firebase Admin configuration is missing a service account.', {
+  if (!hasServiceAccountKey && !hasSplitServiceAccount) {
+    dbAdapterFailureDiagnostic = 'FIREBASE_ADMIN_CREDENTIALS_MISSING';
+    console.error('[Newsletter API] Firebase Admin credentials are missing.', {
       hasFirebaseServiceAccountKey: hasServiceAccountKey,
-      hasFirebaseClientEmail: Boolean(process.env.FIREBASE_CLIENT_EMAIL?.trim()),
-      hasFirebasePrivateKey: Boolean(process.env.FIREBASE_PRIVATE_KEY?.trim()),
-      hasRecaptchaServiceAccountKey: Boolean(process.env.RECAPTCHA_ENTERPRISE_SERVICE_ACCOUNT_KEY?.trim()),
+      hasFirebaseClientEmail: Boolean(clientEmail),
+      hasFirebasePrivateKey: Boolean(privateKey),
       hasProjectId: Boolean(targetProjectId),
       hasDatabaseId: Boolean(targetDatabaseId),
     });
@@ -104,33 +163,32 @@ async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
   }
 
   try {
-    const { initializeApp: initAdminApp, getApps: getAdminApps, getApp: getAdminApp, cert } = await import(
-      'firebase-admin/app'
-    );
-    const { getFirestore: getAdminFirestore } = await import('firebase-admin/firestore');
-    const { getAuth: getAdminAuth } = await import('firebase-admin/auth');
+    const [
+      { initializeApp: initAdminApp, getApps: getAdminApps, cert },
+      { getFirestore: getAdminFirestore },
+      { getAuth: getAdminAuth },
+    ] = await Promise.all([
+      import('firebase-admin/app'),
+      import('firebase-admin/firestore'),
+      import('firebase-admin/auth'),
+    ]);
 
-    let certConfig: any;
-    if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
-      try {
-        certConfig = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
-      } catch {
-        certConfig = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-      }
+    let certConfig: Record<string, unknown>;
+    if (rawServiceAccount) {
+      certConfig = parseServiceAccount(rawServiceAccount);
     } else {
       certConfig = {
         projectId: targetProjectId,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        privateKey: (process.env.FIREBASE_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
+        clientEmail,
+        privateKey: privateKey!.replace(/\\n/g, '\n'),
       };
     }
 
-    const adminApp = !getAdminApps().length
-      ? initAdminApp({
-          credential: cert(certConfig),
-          projectId: targetProjectId,
-        })
-      : getAdminApp();
+    const defaultApp = getAdminApps().find((app: any) => app.name === '[DEFAULT]');
+    const adminApp = defaultApp || initAdminApp({
+      credential: cert(certConfig),
+      projectId: targetProjectId,
+    });
 
     const adminDb = getAdminFirestore(adminApp, targetDatabaseId);
     const adminAuth = getAdminAuth(adminApp);
@@ -140,9 +198,7 @@ async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
         const docRef = adminDb.collection('newsletterSubscribers').doc(docId);
         return await adminDb.runTransaction(async (transaction: any) => {
           const snap = await transaction.get(docRef);
-          if (snap.exists) {
-            return 'already_subscribed';
-          }
+          if (snap.exists) return 'already_subscribed';
           transaction.set(docRef, payload);
           return 'subscribed';
         });
@@ -164,15 +220,28 @@ async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
       },
     };
 
-    console.log('[Newsletter API] Initialized via Firebase Admin SDK in production.');
+    dbAdapterFailureDiagnostic = null;
+    console.log('[Newsletter API] Firebase Admin adapter initialized.', {
+      projectIdConfigured: Boolean(targetProjectId),
+      databaseIdConfigured: Boolean(targetDatabaseId),
+      serviceAccountSource: hasServiceAccountKey ? 'FIREBASE_SERVICE_ACCOUNT_KEY' : 'split_environment_variables',
+    });
     return dbAdapter;
   } catch (adminErr: any) {
-    console.error('[Newsletter API] Production Firebase Admin SDK failed:', adminErr.message);
-    // Strict requirement: Do not fall back to client Web SDK in production.
+    const diagnostic = safeDiagnosticCode(adminErr);
+    dbAdapterFailureDiagnostic = diagnostic === 'SERVICE_ACCOUNT_JSON_INVALID'
+      ? 'FIREBASE_ADMIN_SERVICE_ACCOUNT_JSON_INVALID'
+      : `FIREBASE_ADMIN_INITIALIZATION_FAILED_${diagnostic}`;
+    console.error('[Newsletter API] Firebase Admin initialization failed.', {
+      diagnostic: dbAdapterFailureDiagnostic,
+      serviceAccountKeyPresent: hasServiceAccountKey,
+      splitServiceAccountPresent: hasSplitServiceAccount,
+      projectIdConfigured: Boolean(targetProjectId),
+      databaseIdConfigured: Boolean(targetDatabaseId),
+    });
     return null;
   }
 }
-
 
 type RecaptchaCheck = { passed: boolean; skipped?: boolean; unavailable?: boolean };
 
@@ -358,7 +427,7 @@ export default async function handler(req: Request, res: Response): Promise<void
     if (!adapter) {
       res.status(503).json({
         ok: false,
-        diagnostic: 'NEWSLETTER_ADMIN_ADAPTER_UNAVAILABLE',
+        diagnostic: dbAdapterFailureDiagnostic || 'FIREBASE_ADMIN_ADAPTER_UNAVAILABLE',
         message: 'Your activity service is temporarily unavailable. Please try again shortly.',
       });
       return;
