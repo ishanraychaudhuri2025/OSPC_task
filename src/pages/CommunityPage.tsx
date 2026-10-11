@@ -71,6 +71,7 @@ export function CommunityPage() {
   const [activity, setActivity] = useState<CommunityActivity | null>(null);
   const [activityLoading, setActivityLoading] = useState(true);
   const [activityError, setActivityError] = useState('');
+  const [activityDiagnostic, setActivityDiagnostic] = useState('');
 
   const loadActivity = useCallback(async () => {
     if (!user) {
@@ -82,6 +83,7 @@ export function CommunityPage() {
 
     setActivityLoading(true);
     setActivityError('');
+    setActivityDiagnostic('');
     try {
       const token = await user.getIdToken();
       const response = await fetch('/api/community-activity', {
@@ -89,8 +91,9 @@ export function CommunityPage() {
         headers: { Authorization: `Bearer ${token}` },
         cache: 'no-store',
       });
-      const data = await response.json() as CommunityActivity & { ok?: boolean; message?: string };
+      const data = await response.json() as CommunityActivity & { ok?: boolean; message?: string; diagnostic?: string };
       if (!response.ok || !data.ok) {
+        setActivityDiagnostic(data.diagnostic || '');
         throw new Error(data.message || 'Your activity could not be loaded.');
       }
       setActivity(data);
@@ -546,6 +549,9 @@ export function CommunityPage() {
                   <div>
                     <p className="font-semibold">Activity could not be loaded</p>
                     <p className="mt-1 text-xs leading-relaxed">{activityError}</p>
+                    {activityDiagnostic && (
+                      <p className="mt-2 font-mono text-[10px] tracking-wide opacity-75">Reference: {activityDiagnostic}</p>
+                    )}
                   </div>
                 </div>
                 <button
