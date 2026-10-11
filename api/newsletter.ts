@@ -122,7 +122,9 @@ function parseServiceAccount(rawValue: string): Record<string, unknown> {
     }
   }
 
-  throw new Error('SERVICE_ACCOUNT_JSON_INVALID');
+  const error = new Error('Firebase service-account JSON is invalid.') as Error & { code?: string };
+  error.code = 'SERVICE_ACCOUNT_JSON_INVALID';
+  throw error;
 }
 
 async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
