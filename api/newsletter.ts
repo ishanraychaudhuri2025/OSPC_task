@@ -348,7 +348,7 @@ export default async function handler(req: Request, res: Response): Promise<void
   if (req.method === 'GET') {
     res.setHeader('Cache-Control', 'private, no-store, max-age=0');
     const authorization = req.headers.authorization;
-    const match = typeof authorization === 'string' ? authorization.match(/^Bearer\\s+(.+)$/i) : null;
+    const match = typeof authorization === 'string' ? authorization.match(/^Bearer\s+(.+)$/i) : null;
     if (!match?.[1]) {
       res.status(401).json({ ok: false, message: 'Sign in to view your activity.' });
       return;
