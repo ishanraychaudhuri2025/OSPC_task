@@ -3,11 +3,66 @@ import crypto from 'crypto';
 
 const ALLOWED_INTERESTS = ['Purpose', 'Leadership', 'Trust & Teams', 'Infinite Mindset'] as const;
 
+type ActivityRecord = {
+  id: string;
+  title: string;
+  status: string;
+  createdAt: string | null;
+  updatedAt: string | null;
+  detail: string | null;
+};
+
+type UserActivityDocument = { id: string; data: Record<string, unknown> };
+
 interface DatabaseAdapter {
   checkAndSaveSubscriber: (
     docId: string,
     payload: Record<string, unknown>
   ) => Promise<'subscribed' | 'already_subscribed'>;
+  verifyIdToken: (token: string) => Promise<{ uid: string; email?: string }>;
+  getSubscriberByDocId: (docId: string) => Promise<Record<string, unknown> | null>;
+  getUserActivity: (uid: string, collectionName: 'subscriptions' | 'applications' | 'waitlist') => Promise<UserActivityDocument[]>;
+}
+
+function activityDateToIso(value: any): string | null {
+  if (!value) return null;
+  try {
+    if (typeof value === 'string' || value instanceof Date) {
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? null : date.toISOString();
+    }
+    if (typeof value.toDate === 'function') {
+      const date = value.toDate();
+      return date instanceof Date && !Number.isNaN(date.getTime()) ? date.toISOString() : null;
+    }
+    if (typeof value.seconds === 'number') {
+      return new Date(value.seconds * 1000).toISOString();
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function activityText(data: Record<string, any>, keys: string[]): string | null {
+  for (const key of keys) {
+    const value = data[key];
+    if (typeof value === 'string' && value.trim()) return value.trim().slice(0, 240);
+  }
+  return null;
+}
+
+function mapActivityRecord(id: string, data: Record<string, any>, kind: 'subscription' | 'application' | 'waitlist'): ActivityRecord {
+  const defaultTitle = kind === 'application' ? 'Application record'
+    : kind === 'waitlist' ? 'Waitlist record' : 'Subscription';
+  return {
+    id,
+    title: activityText(data, ['title', 'name', 'program', 'listName', 'role', 'organization']) || defaultTitle,
+    status: activityText(data, ['status', 'state', 'stage']) || 'Recorded',
+    createdAt: activityDateToIso(data.createdAt ?? data.submittedAt ?? data.appliedAt ?? data.joinedAt ?? data.requestedAt),
+    updatedAt: activityDateToIso(data.updatedAt ?? data.lastUpdatedAt),
+    detail: activityText(data, ['description', 'details', 'interest', 'programName', 'organization', 'notes']),
+  };
 }
 
 let dbAdapter: DatabaseAdapter | null = null;
@@ -53,6 +108,7 @@ async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
       'firebase-admin/app'
     );
     const { getFirestore: getAdminFirestore } = await import('firebase-admin/firestore');
+    const { getAuth: getAdminAuth } = await import('firebase-admin/auth');
 
     let certConfig: any;
     if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
@@ -77,6 +133,7 @@ async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
       : getAdminApp();
 
     const adminDb = getAdminFirestore(adminApp, targetDatabaseId);
+    const adminAuth = getAdminAuth(adminApp);
 
     dbAdapter = {
       async checkAndSaveSubscriber(docId, payload) {
@@ -89,6 +146,21 @@ async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
           transaction.set(docRef, payload);
           return 'subscribed';
         });
+      },
+      async verifyIdToken(token) {
+        const decoded = await adminAuth.verifyIdToken(token);
+        return { uid: decoded.uid, email: decoded.email };
+      },
+      async getSubscriberByDocId(docId) {
+        const snap = await adminDb.collection('newsletterSubscribers').doc(docId).get();
+        return snap.exists ? (snap.data() as Record<string, unknown>) : null;
+      },
+      async getUserActivity(uid, collectionName) {
+        const snap = await adminDb.collection('users').doc(uid).collection(collectionName).limit(30).get();
+        return snap.docs.map((item: any) => ({
+          id: item.id,
+          data: (item.data() || {}) as Record<string, unknown>,
+        }));
       },
     };
 
@@ -271,8 +343,100 @@ async function verifyRecaptchaEnterprise(req: Request, token: unknown): Promise<
 }
 
 export default async function handler(req: Request, res: Response): Promise<void> {
+  // Private activity reads share the same Admin SDK/database adapter as newsletter writes.
+  // This keeps credential initialization identical to the already-working signup route.
+  if (req.method === 'GET') {
+    res.setHeader('Cache-Control', 'private, no-store, max-age=0');
+    const authorization = req.headers.authorization;
+    const match = typeof authorization === 'string' ? authorization.match(/^Bearer\\s+(.+)$/i) : null;
+    if (!match?.[1]) {
+      res.status(401).json({ ok: false, message: 'Sign in to view your activity.' });
+      return;
+    }
+
+    const adapter = await getDatabaseAdapter();
+    if (!adapter) {
+      res.status(503).json({
+        ok: false,
+        diagnostic: 'NEWSLETTER_ADMIN_ADAPTER_UNAVAILABLE',
+        message: 'Your activity service is temporarily unavailable. Please try again shortly.',
+      });
+      return;
+    }
+
+    let identity: { uid: string; email?: string };
+    try {
+      identity = await adapter.verifyIdToken(match[1]);
+    } catch {
+      res.status(401).json({
+        ok: false,
+        diagnostic: 'SESSION_VERIFICATION_FAILED',
+        message: 'Your session could not be verified. Please sign in again.',
+      });
+      return;
+    }
+
+    const uid = identity.uid;
+    const accountEmail = typeof identity.email === 'string' ? identity.email.trim().toLowerCase() : '';
+    if (!uid || !accountEmail) {
+      res.status(403).json({
+        ok: false,
+        diagnostic: 'ACCOUNT_EMAIL_MISSING',
+        message: 'Your account needs an email address to match study-list records.',
+      });
+      return;
+    }
+
+    try {
+      const subscriberId = crypto.createHash('sha256').update(accountEmail).digest('hex');
+      const subscriber = await adapter.getSubscriberByDocId(subscriberId);
+      const [subscriptionDocs, applicationDocs, waitlistDocs] = await Promise.all([
+        adapter.getUserActivity(uid, 'subscriptions'),
+        adapter.getUserActivity(uid, 'applications'),
+        adapter.getUserActivity(uid, 'waitlist'),
+      ]);
+
+      const subscriptions: ActivityRecord[] = [];
+      if (subscriber) {
+        subscriptions.push({
+          id: 'notes-on-why',
+          title: 'Notes on WHY',
+          status: 'On the study list',
+          createdAt: activityDateToIso((subscriber as any).createdAt),
+          updatedAt: activityDateToIso((subscriber as any).updatedAt),
+          detail: typeof (subscriber as any).interest === 'string' && (subscriber as any).interest.trim()
+            ? 'Primary focus: ' + (subscriber as any).interest.trim().slice(0, 120)
+            : 'Independent study notes opt-in recorded.',
+        });
+      }
+      subscriptions.push(...subscriptionDocs.map((record) => mapActivityRecord(record.id, record.data as any, 'subscription')));
+      const applications = applicationDocs.map((record) => mapActivityRecord(record.id, record.data as any, 'application'));
+      const waitlist = waitlistDocs.map((record) => mapActivityRecord(record.id, record.data as any, 'waitlist'));
+
+      res.status(200).json({
+        ok: true,
+        accountEmail,
+        subscriptions,
+        applications,
+        waitlist,
+        emailDeliveryEnabled: false,
+        activityUpdatedAt: new Date().toISOString(),
+      });
+    } catch (error: any) {
+      console.error('[Newsletter API] Authenticated activity lookup failed.', {
+        code: typeof error?.code === 'string' ? error.code : 'unknown',
+      });
+      res.status(503).json({
+        ok: false,
+        diagnostic: 'ACTIVITY_RECORD_LOOKUP_FAILED',
+        message: 'Your subscription status could not be retrieved right now. Please refresh and try again.',
+      });
+    }
+    return;
+  }
+
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
+    res.setHeader('Allow', 'GET, POST');
     res.status(405).json({ ok: false, message: 'Method Not Allowed' });
     return;
   }
