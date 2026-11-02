@@ -1,18 +1,33 @@
+# Dependencies and build output
 node_modules/
 build/
 dist/
 coverage/
+.turbo/
+.cache/
+
+# Local platform state
+.vercel/
+.firebase/
 .DS_Store
-*.log
 
 # Environment files: only the variable-name template may be committed
 .env*
 !.env.example
 
+# Registry configuration can contain authentication tokens
+.npmrc
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
 # Google AI Studio generated configuration
 firebase-applet-config.json
 
-# Service-account exports and private credential formats (including common filename variants)
+# Service-account exports and private credential formats
 *serviceAccount*.json
 *service-account*.json
 *service*account*.json
