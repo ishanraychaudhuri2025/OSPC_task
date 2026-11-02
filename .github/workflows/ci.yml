@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: TypeScript and production build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: 1.4.4
+
+      # The current committed bun.lock needs to be regenerated to match package.json.
+      # Until that lockfile-only cleanup is committed, this install resolves the manifest
+      # in the ephemeral runner; switch to bun install --frozen-lockfile afterwards.
+      - name: Install dependencies
+        run: bun install
+
+      - name: TypeScript check
+        run: bun run lint
+
+      - name: Production frontend build
+        run: bun run build
