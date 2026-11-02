@@ -137,14 +137,19 @@ async function getDatabaseAdapter(): Promise<DatabaseAdapter | null> {
   const hasServiceAccountKey = Boolean(rawServiceAccount);
   const hasSplitServiceAccount = Boolean(clientEmail && privateKey);
 
-  const targetProjectId =
-    process.env.FIREBASE_PROJECT_ID ||
-    process.env.VITE_FIREBASE_PROJECT_ID ||
-    'gen-lang-client-0825093002';
-  const targetDatabaseId =
-    process.env.FIREBASE_DATABASE_ID ||
-    process.env.VITE_FIREBASE_DATABASE_ID ||
-    'ai-studio-9a10e882-4e4e-4882-bc66-23bde83789c9';
+  // Admin SDK access must be explicitly bound to a server-side target.
+  // Never infer the Admin project/database from browser (VITE_*) configuration.
+  const targetProjectId = process.env.FIREBASE_PROJECT_ID?.trim();
+  const targetDatabaseId = process.env.FIREBASE_DATABASE_ID?.trim();
+
+  if (!targetProjectId || !targetDatabaseId) {
+    dbAdapterFailureDiagnostic = 'FIREBASE_ADMIN_TARGET_CONFIGURATION_MISSING';
+    console.error('[Newsletter API] Firebase Admin target configuration is missing.', {
+      hasProjectId: Boolean(targetProjectId),
+      hasDatabaseId: Boolean(targetDatabaseId),
+    });
+    return null;
+  }
 
   if (!hasServiceAccountKey && !hasSplitServiceAccount) {
     dbAdapterFailureDiagnostic = 'FIREBASE_ADMIN_CREDENTIALS_MISSING';
@@ -327,18 +332,21 @@ async function getGoogleCloudAccessToken(serviceAccountJson: string): Promise<st
 
 async function verifyRecaptchaEnterprise(req: Request, token: unknown): Promise<RecaptchaCheck> {
   const projectId = process.env.RECAPTCHA_ENTERPRISE_PROJECT_ID;
-  // Verify with the exact site key used by the browser to mint the token.
-  // The server-only alias is a fallback for deployments that do not expose the VITE variable at runtime.
-  const siteKey = process.env.VITE_RECAPTCHA_ENTERPRISE_SITE_KEY || process.env.RECAPTCHA_ENTERPRISE_SITE_KEY;
+  // This public site key is also configured for the browser, but the server reads
+  // only the server-side alias so VITE_ variables never become Admin credentials.
+  const siteKey = process.env.RECAPTCHA_ENTERPRISE_SITE_KEY;
   const serviceAccountJson = process.env.RECAPTCHA_ENTERPRISE_SERVICE_ACCOUNT_KEY;
-  const required = process.env.RECAPTCHA_ENTERPRISE_REQUIRED === 'true';
-  const explicitlyDisabled = process.env.RECAPTCHA_ENTERPRISE_REQUIRED === 'false';
+  const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+  const required = process.env.RECAPTCHA_ENTERPRISE_REQUIRED === 'true' || isProduction;
+  const explicitlyDisabled = process.env.RECAPTCHA_ENTERPRISE_REQUIRED === 'false' && !isProduction;
   const anyConfiguration = Boolean(projectId || siteKey || serviceAccountJson);
 
+  // A local developer may opt out when no CAPTCHA settings are present. Production
+  // always requires server-side assessment, even if REQUIRED=false is accidentally set.
   if (explicitlyDisabled) return { passed: true, skipped: true };
   if (!required && !anyConfiguration) return { passed: true, skipped: true };
 
-  // Once any Enterprise setting is present, require complete configuration and fail closed.
+  // Once required or partially configured, incomplete setup fails closed.
   if (!projectId || !siteKey || !serviceAccountJson) {
     return { passed: false, unavailable: true };
   }
