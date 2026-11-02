@@ -8,8 +8,22 @@ permissions:
 
 jobs:
   dependency-review:
+    # GitHub's Dependency Review action requires the repository Dependency Graph.
+    # Enable it in Settings → Code security and analysis, then set this repository
+    # Actions variable to true to activate the check without changing this workflow.
+    if: ${{ vars.GITHUB_DEPENDENCY_GRAPH_ENABLED == 'true' }}
     name: Dependency review
     runs-on: ubuntu-latest
     steps:
       - name: Review dependency changes
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+
+  dependency-review-setup:
+    if: ${{ vars.GITHUB_DEPENDENCY_GRAPH_ENABLED != 'true' }}
+    name: Dependency review setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain required repository setting
+        run: |
+          echo "::notice::Dependency Review is skipped until the repository Dependency Graph is enabled."
+          echo "::notice::Enable it in Settings > Code security and analysis, then add Actions variable GITHUB_DEPENDENCY_GRAPH_ENABLED=true."
