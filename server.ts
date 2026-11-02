@@ -22,7 +22,7 @@ app.use((_req: Request, res: Response, next) => {
   res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
 
   if (process.env.NODE_ENV === 'production') {
-    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000');
   }
 
   next();
