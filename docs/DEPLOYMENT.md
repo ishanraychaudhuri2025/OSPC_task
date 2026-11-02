@@ -135,6 +135,17 @@ For Firebase Admin, provide either FIREBASE_SERVICE_ACCOUNT_KEY or both FIREBASE
 - [ ] Test one signup, duplicate signup, sign-in, canvas save/delete, and bookmark save/remove.
 - [ ] Review Vercel function logs and Firebase usage after the first production release.
 
+## 7. GitHub repository security settings
+
+The repository owner must enable these controls in **Settings → Code security and analysis**:
+
+1. Enable the **Dependency Graph**. Then add the repository Actions variable `GITHUB_DEPENDENCY_GRAPH_ENABLED=true` so the Dependency Review workflow runs on pull requests.
+2. Enable **Secret scanning** and **Push protection** where available for the public repository.
+3. Enable **Private vulnerability reporting** so researchers can report vulnerabilities without publishing exploit details.
+4. Under **Settings → Branches**, protect `main`: require pull requests, require the CI and Secret scanning checks, require at least one approving review if another maintainer is available, dismiss stale approvals after new commits, require conversation resolution, and block force pushes/deletion.
+
+The Dependency Review workflow is intentionally skipped until the Dependency Graph is enabled, rather than producing a misleading failure when the feature is unavailable.
+
 ## 7. Operational notes
 
 - The in-memory API rate limiter is best-effort per serverless instance. For stronger cross-instance protection, add a Vercel Firewall rate-limit rule or a shared distributed limiter.
