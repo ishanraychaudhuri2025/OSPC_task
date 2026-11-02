@@ -20,6 +20,7 @@ Fill in the local .env file with the values for your own Firebase and Google Clo
 
 Run the available checks:
 
+    bun audit
     bun run lint
     bun run build
 
@@ -114,6 +115,7 @@ For Firebase Admin, provide either FIREBASE_SERVICE_ACCOUNT_KEY or both FIREBASE
 ## 6. Production release checklist
 
 - [ ] The committed bun.lock has been regenerated and matches package.json.
+- [ ] bun audit reports no known vulnerable packages.
 - [ ] bun run lint passes.
 - [ ] bun run build passes with production environment variables.
 - [ ] All required Vercel variables exist in the intended environment.
