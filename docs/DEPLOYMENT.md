@@ -26,6 +26,20 @@ Run the available checks:
 
 The committed bun.lock is now reconciled with package.json using the pinned Bun 1.4.4 toolchain, including the deliberate firebase-admin 13.10.0 pin. CI uses bun install --frozen-lockfile so dependency-manifest drift fails early. After changing package.json, run bun install, review the bun.lock diff, and commit both files together. Do not upgrade Firebase Admin without retesting server-runtime compatibility.
 
+## Dependency security maintenance
+
+The root package manifest uses Bun's `overrides` to keep vulnerable transitive packages on vendor-patched releases, while preserving the intentional `firebase-admin@13.10.0` runtime pin:
+
+| Package | Resolved version | Reason |
+| --- | --- | --- |
+| `@grpc/grpc-js` | `1.14.6` | Avoid vulnerable older nested versions |
+| `body-parser` | `1.20.9` | Includes the compressed-body denial-of-service fix |
+| `qs` | `6.16.1` | Includes the comma-array serialization fix |
+| `re2js` | `2.8.7` | Includes the lookbehind denial-of-service fix |
+| `uuid` | `11.1.1` | Includes the output-buffer bounds validation fix |
+
+The unused direct dependencies `@google/genai` and `@google-cloud/firestore` were removed. The application does not call Gemini APIs, and Firebase Admin retains its own optional Firestore dependency for the newsletter API. Review the runtime impact whenever updating these overrides, and keep `bun audit` in the release gate.
+
 ## 2. Configure Firebase
 
 1. Create or select the Firebase project that will own this deployment.
