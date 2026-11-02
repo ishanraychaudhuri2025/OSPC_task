@@ -18,6 +18,9 @@ coverage/
 # Registry configuration can contain authentication tokens
 .npmrc
 
+# Local Firebase project aliases
+.firebaserc
+
 # Logs
 *.log
 npm-debug.log*
