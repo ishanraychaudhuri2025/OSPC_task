@@ -23,12 +23,7 @@ Run the available checks:
     bun run lint
     bun run build
 
-The repository currently has a known lockfile mismatch: package.json pins firebase-admin to 13.10.0, while the committed bun.lock records ^14.5.0. Regenerate and review the lockfile with the repository's pinned Bun version before relying on frozen/CI installs:
-
-    bun install
-    git diff -- package.json bun.lock
-
-Keep the intentional firebase-admin version decision unless compatibility has been retested. Commit the regenerated bun.lock together with any intentional manifest change. Do not resolve this mismatch by silently upgrading the Admin SDK.
+The committed bun.lock is now reconciled with package.json using the pinned Bun 1.4.4 toolchain, including the deliberate firebase-admin 13.10.0 pin. CI uses bun install --frozen-lockfile so dependency-manifest drift fails early. After changing package.json, run bun install, review the bun.lock diff, and commit both files together. Do not upgrade Firebase Admin without retesting server-runtime compatibility.
 
 ## 2. Configure Firebase
 
