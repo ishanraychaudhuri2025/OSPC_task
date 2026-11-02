@@ -1,7 +1,9 @@
+import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import newsletterHandler from './api/newsletter';
+import communityActivityHandler from './api/community-activity';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -9,17 +11,43 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
-// Security and request parsing
+app.disable('x-powered-by');
+
+// Apply safe defaults to both local Express and self-hosted production responses.
+// Vercel deployments receive the same headers from vercel.json.
+app.use((_req: Request, res: Response, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
+
+  if (process.env.NODE_ENV === 'production') {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000');
+  }
+
+  next();
+});
+
+// Keep API request bodies small. The newsletter endpoint accepts only a few text fields.
 app.use(express.json({ limit: '16kb' }));
 
 // Health Check
 app.get('/api/health', (_req: Request, res: Response) => {
+  res.setHeader('Cache-Control', 'no-store');
   res.json({ ok: true, status: 'healthy', timestamp: new Date().toISOString() });
 });
 
-// Newsletter Opt-in Endpoint (Unified Vercel & Express handler)
-app.post('/api/newsletter', (req: Request, res: Response) => {
+// Match Vercel's API method handling in local development. The shared handler
+// serves POST signups and authenticated GET activity lookups, and returns 405
+// for unsupported methods.
+app.all('/api/newsletter', (req: Request, res: Response) => {
   return newsletterHandler(req, res);
+});
+
+// Backward-compatible alias for older clients.
+app.all('/api/community-activity', (req: Request, res: Response) => {
+  return communityActivityHandler(req, res);
 });
 
 // Configure Vite middleware in development vs Static serving in production
@@ -48,11 +76,12 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[Server] WHY, PRACTICED server running on http://0.0.0.0:${PORT}`);
+    console.log('[Server] WHY, PRACTICED server is listening');
   });
 }
 
 startServer().catch((err) => {
-  console.error('[Server] Fatal startup error:', err);
+  // Do not dump request data or environment values to logs.
+  console.error('[Server] Startup failed:', err instanceof Error ? err.message : 'unknown error');
   process.exit(1);
 });

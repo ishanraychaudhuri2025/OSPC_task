@@ -1,0 +1,16 @@
+# Gitleaks configuration.
+# Firebase Web SDK API keys are public browser identifiers, not admin credentials.
+# This narrow historical exception ignores only Google API-key-shaped matches
+# in the generated firebase-applet-config.json that was removed from the live tree.
+# Private keys, service-account JSON keys, OAuth secrets, tokens and other findings
+# remain subject to the default Gitleaks rules.
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Firebase Web SDK API key in historical generated client config (public by design)"
+condition = "AND"
+paths = ['''(^|/)firebase-applet-config\.json$''']
+regexTarget = "match"
+regexes = ['''AIza[0-9A-Za-z_-]{35}''']
