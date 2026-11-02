@@ -140,14 +140,14 @@ The rules in [`firestore.rules`](firestore.rules) define client access. User-own
 
 ### Prerequisites
 
-- Node.js version supported by the installed Vite release (a current Node.js LTS release is recommended).
-- npm.
+- Bun 1.4.4 (pinned in package.json).
+- Node.js 22.12 or later.
 - Access to the Firebase project used by the application.
 
 ### 1. Install dependencies
 
 ```bash
-npm install
+bun install
 ```
 
 ### 2. Configure local environment
@@ -169,7 +169,7 @@ The example contains variable names only. Add real values to your local `.env` f
 ### 3. Start the development server
 
 ```bash
-npm run dev
+bun run dev
 ```
 
 The Express + Vite middleware server defaults to **http://localhost:3000**.
@@ -178,11 +178,11 @@ The Express + Vite middleware server defaults to **http://localhost:3000**.
 
 | Command | Purpose |
 | --- | --- |
-| `npm run dev` | Start the Express server with Vite development middleware |
-| `npm run lint` | Run the configured TypeScript check (`tsc --noEmit`) |
-| `npm run build` | Build the production frontend into `dist/` |
-| `npm run start` | Start the Node server in production mode |
-| `npm run preview` | Preview the built frontend with Vite; use the Node server when testing the API locally |
+| `bun run dev` | Start the Express server with Vite development middleware |
+| `bun run lint` | Run the configured TypeScript check (`tsc --noEmit`) |
+| `bun run build` | Build the production frontend into `dist/` |
+| `bun run start` | Start the Node server in production mode |
+| `bun run preview` | Preview the built frontend with Vite; use the Node server when testing the API locally |
 
 ## Environment configuration
 
@@ -228,7 +228,7 @@ The production site is hosted at **[ospc-task-xi.vercel.app](https://ospc-task-x
 To reproduce the deployment:
 
 1. Import [`ishanraychaudhuri2025/OSPC_task`](https://github.com/ishanraychaudhuri2025/OSPC_task) into Vercel.
-2. Use the Vite preset, `npm run build` as the build command, and `dist` as the output directory.
+2. Use the Vite preset, `bun run build` as the build command, and `dist` as the output directory.
 3. Add all required `VITE_FIREBASE_*` variables before building.
 4. Add the server-only Firebase Admin variables needed by `api/newsletter.ts`.
 5. Deploy and inspect the build logs if deployment fails.
@@ -292,8 +292,8 @@ For the release checklist and vulnerability-reporting process, see [`SECURITY.md
 Before a release, run the available local checks:
 
 ```bash
-npm run lint
-npm run build
+bun run lint
+bun run build
 ```
 
 Then verify real interactions in the deployed site:
